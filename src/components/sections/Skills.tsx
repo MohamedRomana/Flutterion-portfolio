@@ -6,6 +6,7 @@ import {
   MapPin,
   BellRing,
   GitBranch,
+  Wrench,
   type LucideIcon,
 } from "lucide-react";
 import { Container, Section } from "@/components/ui/Section";
@@ -22,6 +23,7 @@ const iconMap: Record<string, LucideIcon> = {
   MapPin,
   BellRing,
   GitBranch,
+  Wrench,
 };
 
 export function Skills() {

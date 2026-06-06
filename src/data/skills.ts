@@ -44,6 +44,18 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
+    title: "Tools & IDEs",
+    icon: "Wrench",
+    skills: [
+      "Android Studio",
+      "VS Code",
+      "Xcode",
+      "Figma",
+      "Adobe XD",
+      "Postman",
+    ],
+  },
+  {
     title: "Tooling",
     icon: "GitBranch",
     skills: ["Git", "GitHub", "Problem Solving"],
@@ -70,6 +82,11 @@ export const techStack: string[] = [
   "Clean Architecture",
   "Git",
   "GitHub",
+  "Android Studio",
+  "VS Code",
+  "Xcode",
+  "Figma",
+  "Postman",
 ];
 
 /**
