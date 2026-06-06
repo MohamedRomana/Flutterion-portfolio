@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { GraduationCap, Briefcase, MapPin, Languages } from "lucide-react";
 import { Container, Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
@@ -41,11 +42,14 @@ export function About() {
             <div className="glow-shadow relative overflow-hidden rounded-3xl border border-border bg-card p-7">
               <div className="bg-dot pointer-events-none absolute inset-0 opacity-50" />
               <div className="relative flex items-center gap-4">
-                <div
-                  className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-purple text-2xl font-bold text-white"
-                  aria-hidden
-                >
-                  MR
+                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl ring-1 ring-border-strong">
+                  <Image
+                    src="/logo-icon.png"
+                    alt="Flutterion logo"
+                    fill
+                    sizes="64px"
+                    className="object-cover"
+                  />
                 </div>
                 <div>
                   <p className="text-lg font-semibold">{profile.name}</p>

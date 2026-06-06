@@ -70,12 +70,12 @@ export function Loader() {
             className="relative z-10 flex flex-col items-center gap-6"
           >
             <Image
-              src="/logo.png"
-              alt="Flutterion"
-              width={1672}
-              height={941}
+              src="/logo-splash.png"
+              alt="Flutterion — Performance in Motion"
+              width={1536}
+              height={1024}
               priority
-              className="h-20 w-auto sm:h-24"
+              className="h-auto w-56 sm:w-72"
             />
             <div className="h-0.5 w-44 overflow-hidden rounded-full bg-white/10">
               <motion.div
@@ -85,9 +85,6 @@ export function Loader() {
                 className="h-full w-full bg-gradient-to-r from-sky-500 via-cyan-300 to-violet-500"
               />
             </div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.4em] text-slate-400">
-              Performance in Motion
-            </p>
           </motion.div>
         </motion.div>
       )}
