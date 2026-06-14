@@ -13,10 +13,12 @@ export type ProjectCategory =
   | "E-commerce"
   | "Delivery"
   | "On-Demand Services"
+  | "Roadside Assistance"
   | "Travel"
   | "EdTech"
   | "Productivity"
   | "Islamic / Lifestyle"
+  | "Health / Accessibility"
   | "Restaurant";
 
 export interface ProjectLinks {

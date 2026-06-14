@@ -75,6 +75,131 @@ export const projects: Project[] = [
   },
 
   {
+    slug: "satha",
+    name: "Satha",
+    tagline: "On-demand flatbed tow-truck app that rescues stranded cars on the road — whatever the breakdown.",
+    category: "Roadside Assistance",
+    platform: "android",
+    accent: "#f97316",
+    imageCount: 9,
+    featured: false,
+    isPrivate: false,
+    links: {
+      drive: "https://drive.google.com/file/d/1kw8eFvbDTIR5pBWAU9jETJMM9kJNOmLC/view",
+    },
+    overview:
+      "Satha (سطحة) is an on-demand roadside-rescue app that gets a flatbed tow truck to a stranded car within minutes — no matter the problem. Drivers request a tow through a short guided flow, receive competing offers from nearby tow operators, pick the best one, then track the rescue live and chat with the driver until the car is back on the road.",
+    problem:
+      "When a car breaks down on the road, the driver is stuck with no fast, transparent way to find a nearby tow truck, agree on a fair price, and know when help will actually arrive. Calls are slow, prices are unclear, and there's no way to follow the rescue in real time.",
+    solution:
+      "I built a complete request-and-dispatch experience: a 5-step order flow (tow type → vehicle → problem → location → confirm), an offer system where multiple operators bid on each request so the customer picks the best price, a live status timeline from dispatch to completion, and in-app chat with voice notes, location sharing, and photos — all powered by BLoC, Google Maps, and Firebase notifications.",
+    role:
+      "Flutter Developer — built the customer app end-to-end: the multi-step request flow, the offers/bidding experience, live order tracking, real-time chat, maps, and notifications.",
+    features: [
+      "Guided 5-step tow request (service type, vehicle, problem, location, confirm)",
+      "Tow-type selection — standard or hydraulic flatbed",
+      "Problem picker — accident, breakdown, flat tyre, dead battery, out of fuel, relocation & more",
+      "Competing offers — operators bid and the customer chooses the best price",
+      "Live order timeline — sent, driver assigned, arrived, en route, completed",
+      "In-app chat with voice notes, live location & photo sharing",
+      "Firebase push notifications at every stage of the rescue",
+      "Order history — active, completed & cancelled requests",
+    ],
+    stack: [
+      "Flutter",
+      "Dart",
+      "BLoC",
+      "Dio",
+      "REST APIs",
+      "Firebase",
+      "Firebase Messaging",
+      "Google Maps API",
+      "Geolocator",
+      "ScreenUtil",
+    ],
+    decisions: [
+      "Modelled the rescue as an explicit status timeline so the customer always knows exactly where the request stands, from dispatch to completion.",
+      "Designed an offer/bidding flow rather than fixed pricing, letting operators compete and customers choose — which required keeping a single order in sync across multiple incoming offers.",
+      "Used BLoC with Dio and Firebase messaging so live tracking, chat, and notifications all stay consistent as the order changes state.",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Keeping a single request in sync as multiple tow operators send, update, and withdraw competing offers in real time.",
+        solution:
+          "A BLoC-driven order state combined with Firebase messaging keeps the offers list and order status live, so the customer always sees an accurate, up-to-date set of choices.",
+      },
+      {
+        challenge:
+          "Communicating a fast-moving roadside rescue clearly to a stressed driver who needs to know what's happening right now.",
+        solution:
+          "A simple status timeline plus real-time chat (voice, location, photos) gives the customer instant, unambiguous visibility into the rescue at every step.",
+      },
+    ],
+  },
+
+  {
+    slug: "speak-mate",
+    name: "Speak Mate",
+    tagline: "Speech-therapy companion for people with special needs — an AAC board, guided exercises, and therapist follow-up.",
+    category: "Health / Accessibility",
+    platform: "android",
+    accent: "#6366f1",
+    imageCount: 6,
+    featured: false,
+    isPrivate: false,
+    links: {
+      drive: "https://drive.google.com/file/d/1bqrwkiI64zAC5saXU75qBWCpd0FRSqWz/view",
+    },
+    overview:
+      "Speak Mate is a speech-therapy and communication companion for people with special needs. It pairs an AAC communication board — where users tap symbols to build a sentence and have it spoken aloud — with gamified pronunciation exercises, an AI assistant, progress tracking, and direct follow-up with speech therapists, all wrapped in a deeply accessible interface.",
+    problem:
+      "People with speech and communication difficulties need more than a single tool: a way to communicate when speaking is hard, structured practice to improve pronunciation, a way to stay connected to their therapist between sessions, and an interface built around accessibility — rarely found together in one app.",
+    solution:
+      "I built a multi-surface app: an AAC board that turns tapped symbols into spoken sentences via text-to-speech, gamified exercises (sound articulation, verbal puzzles, sound matching) with progress tracking, an AI assistant for support when the therapist is offline, real-time chat and calls with speech specialists, and a full accessibility layer — adjustable text size, high-contrast mode, voice commands, light/dark themes, Arabic/English, and an offline mode.",
+    role:
+      "Flutter Developer — built the AAC communication board and text-to-speech, the exercises and progress dashboard, the AI assistant and therapist chat, and the accessibility settings layer.",
+    features: [
+      "AAC communication board — tap symbols to build a sentence, then speak it aloud (text-to-speech)",
+      "Categorised symbols — basics, food, feelings & actions",
+      "Gamified exercises — sound articulation, verbal puzzles & sound matching with progress",
+      "Progress dashboard — pronunciation accuracy, completed sessions, streaks & trend chart",
+      "AI assistant for guidance and practice when a specialist is offline",
+      "Therapist follow-up — real-time chat, voice notes, voice & video calls",
+      "Accessibility layer — text size, high-contrast mode & voice commands",
+      "Light/dark themes, Arabic & English, and an offline mode for practising without internet",
+    ],
+    stack: [
+      "Flutter",
+      "Dart",
+      "BLoC",
+      "Text-to-Speech",
+      "REST APIs",
+      "Firebase",
+      "Local Storage",
+    ],
+    decisions: [
+      "Treated accessibility as a first-class feature — adjustable text size, high contrast, voice commands, and bilingual RTL/LTR support — rather than an afterthought.",
+      "Gamified practice with progress, streaks, and a trend chart to keep users motivated to return daily.",
+      "Added an offline mode so exercises and recordings keep working without a connection, syncing when back online.",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Designing a single interface usable by people with a wide range of abilities, including non-verbal users.",
+        solution:
+          "An AAC board with large symbol tiles and text-to-speech lets non-verbal users communicate, while an adjustable accessibility layer (text size, contrast, voice commands) adapts the whole app to each person's needs.",
+      },
+      {
+        challenge:
+          "Keeping users engaged with repetitive speech practice over time.",
+        solution:
+          "Exercises are gamified with progress bars, streaks, and an accuracy trend chart, turning daily practice into visible, motivating momentum.",
+      },
+    ],
+  },
+
+  {
     slug: "almustarih",
     name: "Almustarih",
     tagline: "Auto-parts & car-service marketplace connecting owners, vendors, and workshops.",
