@@ -82,15 +82,8 @@ export const projects: Project[] = [
     category: "Roadside Assistance",
     platform: "android",
     accent: "#f97316",
-    imageCount: 31,
-    cover: "/screens/satha/client/1.jpg",
-    coverAlt: "/screens/satha/client/2.jpg",
-    screenshotGroups: [
-      { label: "Onboarding", dir: "start", count: 5 },
-      { label: "Customer App", dir: "client", count: 8 },
-      { label: "Driver App", dir: "driver", count: 5 },
-      { label: "Admin Dashboard", dir: "admin", count: 13 },
-    ],
+    imageCount: 7,
+    storeShots: true,
     featured: false,
     isPrivate: false,
     links: {
@@ -155,11 +148,12 @@ export const projects: Project[] = [
     category: "Health / Accessibility",
     platform: "android",
     accent: "#6366f1",
-    imageCount: 6,
+    imageCount: 10,
+    storeShots: true,
     featured: false,
     isPrivate: false,
     links: {
-      drive: "https://drive.google.com/file/d/1bqrwkiI64zAC5saXU75qBWCpd0FRSqWz/view",
+      drive: "https://drive.google.com/file/d/1J6u42cEEEe19DG7ZEAoEZXvwkmts1dnu/view",
     },
     overview:
       "Speak Mate is a speech-therapy and communication companion for people with special needs. It pairs an AAC communication board — where users tap symbols to build a sentence and have it spoken aloud — with gamified pronunciation exercises, an AI assistant, progress tracking, and direct follow-up with speech therapists, all wrapped in a deeply accessible interface.",

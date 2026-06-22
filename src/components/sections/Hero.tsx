@@ -152,44 +152,48 @@ export function Hero() {
 
             <motion.div
               style={{ y: yBack }}
-              className="absolute left-2 top-10 w-[44%] rotate-[-8deg]"
+              className="absolute left-2 top-14 w-[46%] rotate-[-8deg]"
             >
               <PhoneFrame
-                src="/screens/speak-mate/1.jpg"
-                alt="Speak Mate speech-therapy app"
-                sizes="180px"
+                src="/screens/alaswak/1.jpg"
+                alt="Alaswak e-commerce app"
+                store
+                sizes="190px"
               />
             </motion.div>
             <motion.div
               style={{ y: yBack }}
-              className="absolute right-1 top-16 w-[44%] rotate-[9deg]"
+              className="absolute right-1 top-20 w-[46%] rotate-[9deg]"
             >
               <PhoneFrame
-                src="/screens/hidaya/1.jpg"
-                alt="Hidaya Quran companion app"
-                sizes="180px"
+                src="/screens/almustarih/1.jpg"
+                alt="Almustarih marketplace app"
+                store
+                sizes="190px"
               />
             </motion.div>
             <motion.div
               style={{ y: yFront }}
-              className="absolute left-1/2 top-2 w-[50%] -translate-x-1/2"
+              className="absolute left-1/2 top-4 w-[52%] -translate-x-1/2"
             >
               <PhoneFrame
-                src="/screens/satha/client/1.jpg"
-                alt="Satha roadside-rescue app"
+                src="/screens/adec-request/1.jpg"
+                alt="AdEC Request enterprise app"
+                store
                 priority
-                sizes="220px"
+                sizes="230px"
               />
             </motion.div>
           </motion.div>
 
           {/* Mobile phone preview */}
-          <div className="mx-auto w-40 sm:hidden">
+          <div className="mx-auto w-48 sm:hidden">
             <PhoneFrame
-              src="/screens/satha/client/1.jpg"
-              alt="Satha roadside-rescue app"
+              src="/screens/adec-request/1.jpg"
+              alt="AdEC Request enterprise app"
+              store
               priority
-              sizes="160px"
+              sizes="190px"
             />
           </div>
         </div>
