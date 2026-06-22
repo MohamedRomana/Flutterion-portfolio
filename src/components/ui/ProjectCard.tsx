@@ -51,7 +51,7 @@ export function ProjectCard({
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
             <Image
-              src={`/screens/${project.slug}/1.jpg`}
+              src={project.cover ?? `/screens/${project.slug}/1.jpg`}
               alt={`${project.name} app screenshot`}
               fill
               priority={priority}

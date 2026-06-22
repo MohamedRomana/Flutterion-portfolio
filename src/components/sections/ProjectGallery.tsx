@@ -4,26 +4,55 @@ import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import type { ScreenshotGroup } from "@/types";
+
+type Section = { label: string; srcs: string[]; offset: number };
 
 export function ProjectGallery({
   slug,
   imageCount,
+  groups,
   name,
   accent,
 }: {
   slug: string;
   imageCount: number;
+  /** When provided, screenshots render as labelled sections (by role/flow). */
+  groups?: ScreenshotGroup[];
   name: string;
   accent: string;
 }) {
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
   const reduce = useReducedMotion();
-  const images = Array.from({ length: imageCount }, (_, i) => i + 1);
+
+  // Build labelled sections; each tracks its starting offset in the flat list.
+  const sections: Section[] = [];
+  let running = 0;
+  if (groups && groups.length > 0) {
+    for (const g of groups) {
+      const srcs = Array.from(
+        { length: g.count },
+        (_, i) => `/screens/${slug}/${g.dir}/${i + 1}.jpg`,
+      );
+      sections.push({ label: g.label, srcs, offset: running });
+      running += g.count;
+    }
+  } else {
+    sections.push({
+      label: "",
+      srcs: Array.from({ length: imageCount }, (_, i) => `/screens/${slug}/${i + 1}.jpg`),
+      offset: 0,
+    });
+    running = imageCount;
+  }
+
+  const flat = sections.flatMap((s) => s.srcs);
+  const total = flat.length;
 
   const go = useCallback(
-    (dir: number) => setIndex((i) => (i + dir + imageCount) % imageCount),
-    [imageCount],
+    (dir: number) => setIndex((i) => (i + dir + total) % total),
+    [total],
   );
 
   const openAt = (i: number) => {
@@ -48,28 +77,53 @@ export function ProjectGallery({
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-        {images.map((n, i) => (
-          <button
-            key={n}
-            type="button"
-            onClick={() => openAt(i)}
-            aria-label={`Open ${name} screenshot ${n} of ${imageCount}`}
-            data-cursor="hover"
-            className="group relative aspect-[9/19.5] overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/40"
-          >
-            <Image
-              src={`/screens/${slug}/${n}.jpg`}
-              alt={`${name} screenshot ${n}`}
-              fill
-              sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 22vw"
-              className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-            />
-            <span
-              className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-              style={{ background: `linear-gradient(0deg, ${accent}33, transparent 60%)` }}
-            />
-          </button>
+      <div className="flex flex-col gap-10">
+        {sections.map((section) => (
+          <div key={section.label || "all"} className="flex flex-col gap-4">
+            {section.label && (
+              <div className="flex items-center gap-3">
+                <span
+                  className="h-2 w-2 shrink-0 rounded-full"
+                  style={{ background: accent }}
+                  aria-hidden
+                />
+                <h3 className="font-mono text-sm font-medium uppercase tracking-[0.15em] text-foreground">
+                  {section.label}
+                </h3>
+                <span className="font-mono text-xs text-muted">
+                  {section.srcs.length} screens
+                </span>
+                <span className="h-px flex-1 bg-border" aria-hidden />
+              </div>
+            )}
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+              {section.srcs.map((src, i) => {
+                const flatIndex = section.offset + i;
+                return (
+                  <button
+                    key={src}
+                    type="button"
+                    onClick={() => openAt(flatIndex)}
+                    aria-label={`Open ${name} ${section.label ? section.label + " " : ""}screenshot ${i + 1}`}
+                    data-cursor="hover"
+                    className="group relative aspect-[9/19.5] overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/40"
+                  >
+                    <Image
+                      src={src}
+                      alt={`${name} ${section.label} screenshot ${i + 1}`}
+                      fill
+                      sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 22vw"
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <span
+                      className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                      style={{ background: `linear-gradient(0deg, ${accent}33, transparent 60%)` }}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         ))}
       </div>
 
@@ -128,7 +182,7 @@ export function ProjectGallery({
               style={{ aspectRatio: "9 / 19.5" }}
             >
               <Image
-                src={`/screens/${slug}/${index + 1}.jpg`}
+                src={flat[index]}
                 alt={`${name} screenshot ${index + 1}`}
                 fill
                 sizes="40vh"
@@ -138,7 +192,7 @@ export function ProjectGallery({
             </motion.div>
 
             <span className="absolute bottom-5 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-3 py-1 font-mono text-xs text-white">
-              {index + 1} / {imageCount}
+              {index + 1} / {total}
             </span>
           </motion.div>
         )}

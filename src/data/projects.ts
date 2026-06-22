@@ -77,33 +77,42 @@ export const projects: Project[] = [
   {
     slug: "satha",
     name: "Satha",
-    tagline: "On-demand flatbed tow-truck app that rescues stranded cars on the road — whatever the breakdown.",
+    tagline: "On-demand flatbed tow-truck platform — customer, driver & admin apps that rescue stranded cars on the road.",
     category: "Roadside Assistance",
     platform: "android",
     accent: "#f97316",
-    imageCount: 9,
+    imageCount: 31,
+    cover: "/screens/satha/client/1.jpg",
+    coverAlt: "/screens/satha/client/2.jpg",
+    screenshotGroups: [
+      { label: "Onboarding", dir: "start", count: 5 },
+      { label: "Customer App", dir: "client", count: 8 },
+      { label: "Driver App", dir: "driver", count: 5 },
+      { label: "Admin Dashboard", dir: "admin", count: 13 },
+    ],
     featured: false,
     isPrivate: false,
     links: {
-      drive: "https://drive.google.com/file/d/1kw8eFvbDTIR5pBWAU9jETJMM9kJNOmLC/view",
+      drive: "https://drive.google.com/file/d/1WNilV-Ve87c87OSdAf4F9NdIrxJidkZF/view",
     },
     overview:
-      "Satha (سطحة) is an on-demand roadside-rescue app that gets a flatbed tow truck to a stranded car within minutes — no matter the problem. Drivers request a tow through a short guided flow, receive competing offers from nearby tow operators, pick the best one, then track the rescue live and chat with the driver until the car is back on the road.",
+      "Satha (سطحة) is a complete on-demand roadside-rescue platform that gets a flatbed tow truck to a stranded car within minutes — no matter the problem. It spans three connected apps: a customer app to request and track a tow, a driver app for tow operators to receive and fulfil requests, and an admin dashboard to manage customers, drivers, and live orders across the whole system.",
     problem:
-      "When a car breaks down on the road, the driver is stuck with no fast, transparent way to find a nearby tow truck, agree on a fair price, and know when help will actually arrive. Calls are slow, prices are unclear, and there's no way to follow the rescue in real time.",
+      "When a car breaks down on the road, the driver is stuck with no fast, transparent way to find a nearby tow truck, agree on a fair price, and know when help will actually arrive. At the same time, tow operators need a steady stream of jobs and the business needs oversight of every customer, driver, and order — none of which existed in one connected system.",
     solution:
-      "I built a complete request-and-dispatch experience: a 5-step order flow (tow type → vehicle → problem → location → confirm), an offer system where multiple operators bid on each request so the customer picks the best price, a live status timeline from dispatch to completion, and in-app chat with voice notes, location sharing, and photos — all powered by BLoC, Google Maps, and Firebase notifications.",
+      "I built the full platform end-to-end: a customer app with a 5-step request flow and a competing-offers system so customers pick the best price, a driver app with an availability toggle, daily earnings, ratings, and trip management, and an admin dashboard with live platform stats and management of customers, drivers, and orders. A live status timeline, real-time chat, Google Maps tracking, and Firebase notifications keep all three sides in sync.",
     role:
-      "Flutter Developer — built the customer app end-to-end: the multi-step request flow, the offers/bidding experience, live order tracking, real-time chat, maps, and notifications.",
+      "Flutter Developer — built all three apps (customer, driver, and admin) end-to-end: the request and offers flows, driver job management, the admin dashboard, live order tracking, real-time chat, maps, and notifications.",
     features: [
-      "Guided 5-step tow request (service type, vehicle, problem, location, confirm)",
+      "Three connected apps — customer, driver & admin — on one platform",
+      "Customer: guided 5-step tow request (service type, vehicle, problem, location, confirm)",
       "Tow-type selection — standard or hydraulic flatbed",
-      "Problem picker — accident, breakdown, flat tyre, dead battery, out of fuel, relocation & more",
       "Competing offers — operators bid and the customer chooses the best price",
       "Live order timeline — sent, driver assigned, arrived, en route, completed",
+      "Driver app — availability toggle, daily orders, earnings & ratings dashboard",
+      "Admin dashboard — totals for customers, drivers & active orders with management",
       "In-app chat with voice notes, live location & photo sharing",
       "Firebase push notifications at every stage of the rescue",
-      "Order history — active, completed & cancelled requests",
     ],
     stack: [
       "Flutter",
@@ -118,20 +127,20 @@ export const projects: Project[] = [
       "ScreenUtil",
     ],
     decisions: [
-      "Modelled the rescue as an explicit status timeline so the customer always knows exactly where the request stands, from dispatch to completion.",
+      "Built three role-specific apps on a shared architecture so customer, driver, and admin experiences stay consistent while each is tailored to its user.",
       "Designed an offer/bidding flow rather than fixed pricing, letting operators compete and customers choose — which required keeping a single order in sync across multiple incoming offers.",
-      "Used BLoC with Dio and Firebase messaging so live tracking, chat, and notifications all stay consistent as the order changes state.",
+      "Used BLoC with Dio and Firebase messaging so live tracking, chat, and notifications all stay consistent across every side of the platform.",
     ],
     challenges: [
       {
         challenge:
-          "Keeping a single request in sync as multiple tow operators send, update, and withdraw competing offers in real time.",
+          "Keeping a single order in sync across three different apps — customer, driver, and admin — as its status and competing offers change in real time.",
         solution:
-          "A BLoC-driven order state combined with Firebase messaging keeps the offers list and order status live, so the customer always sees an accurate, up-to-date set of choices.",
+          "A BLoC-driven order state combined with Firebase messaging keeps every side's view of an order live and accurate, from the customer's offers list to the driver's job and the admin's dashboard.",
       },
       {
         challenge:
-          "Communicating a fast-moving roadside rescue clearly to a stressed driver who needs to know what's happening right now.",
+          "Communicating a fast-moving roadside rescue clearly to a stressed customer who needs to know what's happening right now.",
         solution:
           "A simple status timeline plus real-time chat (voice, location, photos) gives the customer instant, unambiguous visibility into the rescue at every step.",
       },

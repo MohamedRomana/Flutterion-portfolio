@@ -7,7 +7,7 @@ import type { Profile } from "@/types";
  */
 export const profile: Profile = {
   name: "Mohamed Romana",
-  brand: "Flutterion",
+  brand: "Mohamed Romana",
   tagline: "Performance in Motion",
   title: "Flutter Developer",
   location: "Mansoura, Egypt",

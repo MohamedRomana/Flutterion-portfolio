@@ -11,6 +11,8 @@ import type { Project } from "@/types";
 function FeaturedRow({ project, index }: { project: Project; index: number }) {
   const flipped = index % 2 === 1;
   const second = Math.min(2, project.imageCount);
+  const coverMain = project.cover ?? `/screens/${project.slug}/1.jpg`;
+  const coverSecondary = project.coverAlt ?? `/screens/${project.slug}/${second}.jpg`;
 
   return (
     <Reveal>
@@ -27,14 +29,14 @@ function FeaturedRow({ project, index }: { project: Project; index: number }) {
             <div className="relative mx-auto flex max-w-sm items-center justify-center">
               <div className="w-[42%] translate-y-4 -rotate-6">
                 <PhoneFrame
-                  src={`/screens/${project.slug}/${second}.jpg`}
+                  src={coverSecondary}
                   alt={`${project.name} secondary screen`}
                   sizes="160px"
                 />
               </div>
               <div className="-ml-6 w-[48%] rotate-3">
                 <PhoneFrame
-                  src={`/screens/${project.slug}/1.jpg`}
+                  src={coverMain}
                   alt={`${project.name} main screen`}
                   sizes="200px"
                 />

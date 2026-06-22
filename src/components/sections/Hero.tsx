@@ -129,7 +129,7 @@ export function Hero() {
                 <MapPin className="h-4 w-4 text-primary" /> {profile.location}
               </span>
               <span className="hidden h-4 w-px bg-border sm:block" />
-              <span>10 apps shipped · iOS &amp; Android · BLoC-first</span>
+              <span>12 apps shipped · iOS &amp; Android · BLoC-first</span>
             </motion.div>
           </motion.div>
 

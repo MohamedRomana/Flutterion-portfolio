@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState, useSyncExternalStore } from "react";
-import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { FlutterLogo } from "./FlutterLogo";
+import { profile } from "@/data/profile";
 
 /** Stable across SSR (false) and client (true) without set-state-in-effect. */
 function useHasMounted(): boolean {
@@ -14,7 +15,7 @@ function useHasMounted(): boolean {
 }
 
 /**
- * Short, premium intro loader with a Flutterion logo reveal. Shows once per
+ * Short, premium intro loader with a Flutter logo reveal. Shows once per
  * browser session, locks scroll while visible, and respects reduced motion.
  */
 export function Loader() {
@@ -69,14 +70,17 @@ export function Loader() {
             transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
             className="relative z-10 flex flex-col items-center gap-6"
           >
-            <Image
-              src="/logo-splash.png"
-              alt="Flutterion — Performance in Motion"
-              width={1536}
-              height={1024}
-              priority
-              className="h-auto w-56 sm:w-72"
-            />
+            <div className="flex flex-col items-center gap-4">
+              <FlutterLogo className="h-16 w-auto" />
+              <div className="flex flex-col items-center gap-1">
+                <span className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+                  {profile.name}
+                </span>
+                <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-white/50">
+                  {profile.title}
+                </span>
+              </div>
+            </div>
             <div className="h-0.5 w-44 overflow-hidden rounded-full bg-white/10">
               <motion.div
                 initial={{ x: "-100%" }}

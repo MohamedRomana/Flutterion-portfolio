@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Flutterion | Flutter Developer Portfolio",
-    short_name: "Flutterion",
+    name: "Mohamed Romana | Flutter Developer Portfolio",
+    short_name: "Mohamed Romana",
     description:
       "Flutter developer portfolio showcasing high-performance mobile applications.",
     start_url: "/",

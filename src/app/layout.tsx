@@ -20,16 +20,16 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
-const SITE_URL = "https://flutterion.dev";
+const SITE_URL = "https://flutterion-portfolio.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Flutterion | Flutter Developer Portfolio",
-    template: "%s | Flutterion",
+    default: "Mohamed Romana | Flutter Developer Portfolio",
+    template: "%s | Mohamed Romana",
   },
   description:
-    "Flutterion is a Flutter developer portfolio showcasing high-performance mobile applications, real-time features, scalable architecture, and polished user experiences.",
+    "Mohamed Romana is a Flutter developer portfolio showcasing high-performance mobile applications, real-time features, scalable architecture, and polished user experiences.",
   keywords: [
     "Flutter Developer",
     "Mobile App Developer",
@@ -37,7 +37,6 @@ export const metadata: Metadata = {
     "BLoC",
     "Flutter Portfolio",
     "Mohamed Romana",
-    "Flutterion",
     "iOS & Android Apps",
   ],
   authors: [{ name: "Mohamed Romana" }],
@@ -45,22 +44,22 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: SITE_URL,
-    title: "Flutterion | Flutter Developer Portfolio",
+    title: "Mohamed Romana | Flutter Developer Portfolio",
     description:
       "High-performance Flutter mobile applications — real-time features, scalable architecture, and polished user experiences.",
-    siteName: "Flutterion",
+    siteName: "Mohamed Romana",
     images: [
       {
         url: "/logo.png",
         width: 1280,
         height: 720,
-        alt: "Flutterion — Performance in Motion",
+        alt: "Mohamed Romana — Flutter Developer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Flutterion | Flutter Developer Portfolio",
+    title: "Mohamed Romana | Flutter Developer Portfolio",
     description:
       "High-performance Flutter mobile applications — real-time features, scalable architecture, and polished user experiences.",
     images: ["/logo.png"],

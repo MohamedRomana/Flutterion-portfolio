@@ -1,40 +1,40 @@
-import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { FlutterLogo } from "./FlutterLogo";
+import { profile } from "@/data/profile";
 
 /**
- * The horizontal Flutterion lockup (bird + wordmark), used as supplied.
- * It ships with a baked deep-navy background, so it sits inside a matching
- * brand chip with a soft rounded radius that reads cleanly in both themes.
+ * Brand lockup — the Flutter logo mark paired with the "Mohamed Romana"
+ * wordmark. Renders cleanly in both light and dark themes.
  */
 export function Logo({
   className,
-  priority = false,
   size = "md",
 }: {
   className?: string;
+  /** `priority` is accepted for call-site compatibility; the SVG needs none. */
   priority?: boolean;
   size?: "sm" | "md";
 }) {
-  const h = size === "sm" ? "h-7" : "h-8 sm:h-9";
+  const h = size === "sm" ? "h-6" : "h-7 sm:h-8";
   return (
     <Link
       href="/"
-      aria-label="Flutterion — home"
+      aria-label={`${profile.name} — home`}
       className={cn(
-        "group inline-flex items-center overflow-hidden rounded-xl bg-[#050b16] px-2.5 py-1 ring-1 ring-white/10 transition-shadow duration-300 hover:ring-primary/40",
+        "group inline-flex items-center gap-2.5 rounded-xl py-1 pr-1 transition-opacity duration-300 hover:opacity-90",
         className,
       )}
     >
-      <Image
-        src="/logo-horizontal.png"
-        alt="Flutterion — Performance in Motion"
-        width={2508}
-        height={627}
-        priority={priority}
-        className={cn("w-auto", h)}
-        sizes="170px"
-      />
+      <FlutterLogo className={cn("w-auto", h)} />
+      <span className="flex flex-col leading-none">
+        <span className="text-sm font-semibold tracking-tight text-foreground sm:text-base">
+          {profile.name}
+        </span>
+        <span className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted">
+          {profile.title}
+        </span>
+      </span>
     </Link>
   );
 }

@@ -37,18 +37,18 @@ export function About() {
             </div>
           </div>
 
-          {/* Profile card (initials avatar — no stock photography) */}
+          {/* Profile card */}
           <Reveal delay={0.1}>
             <div className="glow-shadow relative overflow-hidden rounded-3xl border border-border bg-card p-7">
               <div className="bg-dot pointer-events-none absolute inset-0 opacity-50" />
               <div className="relative flex items-center gap-4">
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl ring-1 ring-border-strong">
+                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full ring-2 ring-primary/30">
                   <Image
-                    src="/logo-icon.png"
-                    alt="Flutterion logo"
+                    src="/about-me.jpg"
+                    alt={profile.name}
                     fill
-                    sizes="64px"
-                    className="object-cover"
+                    sizes="80px"
+                    className="object-cover object-top"
                   />
                 </div>
                 <div>

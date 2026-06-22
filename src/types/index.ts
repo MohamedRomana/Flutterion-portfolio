@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------------- */
-/*  Shared, editable content types for the Flutterion portfolio.     */
+/*  Shared, editable content types for the portfolio.                */
 /*  All site copy lives in src/data/* and conforms to these types.   */
 /* ---------------------------------------------------------------- */
 
@@ -36,6 +36,18 @@ export interface ChallengeSolution {
   solution: string;
 }
 
+/**
+ * A labelled set of screenshots — used when a project's gallery is split
+ * into sections (e.g. by user role: customer / driver / admin). Images live
+ * in /public/screens/<slug>/<dir>/{1..count}.jpg.
+ */
+export interface ScreenshotGroup {
+  label: string;
+  /** Subfolder under /public/screens/<slug>/ */
+  dir: string;
+  count: number;
+}
+
 export interface Project {
   slug: string;
   name: string;
@@ -47,6 +59,19 @@ export interface Project {
   accent: string;
   /** Number of screenshots available in /public/screens/<slug>/{n}.jpg */
   imageCount: number;
+  /**
+   * Cover image path for cards, the hero, and social previews.
+   * Defaults to /screens/<slug>/1.jpg when omitted — set this when the
+   * screenshots live in role subfolders (see `screenshotGroups`).
+   */
+  cover?: string;
+  /** Secondary hero image; defaults to /screens/<slug>/2.jpg. */
+  coverAlt?: string;
+  /**
+   * When set, the gallery renders sectioned groups (by role/flow) instead
+   * of a single flat grid built from `imageCount`.
+   */
+  screenshotGroups?: ScreenshotGroup[];
   featured: boolean;
   /** Government / NDA work with no public links. */
   isPrivate: boolean;

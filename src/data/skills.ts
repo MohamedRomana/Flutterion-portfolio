@@ -91,11 +91,11 @@ export const techStack: string[] = [
 
 /**
  * Stats use only real, verifiable numbers — no invented metrics.
- * 10 = shipped apps in this portfolio. 5 = roles in the RGA platform (CV).
+ * 12 = shipped apps in this portfolio. 5 = roles in the RGA platform (CV).
  * 2 = iOS + Android. The fourth stat is a factual status, not a metric.
  */
 export const stats: Stat[] = [
-  { value: 10, display: "10", label: "Flutter apps designed & built", suffix: "" },
+  { value: 12, display: "12", label: "Flutter apps designed & built", suffix: "" },
   { value: 2, display: "2", label: "Platforms shipped — iOS & Android", suffix: "" },
   { value: 5, display: "5", label: "User roles in the flagship RGA platform", suffix: "" },
   { value: null, display: "BLoC", label: "First architecture, every project", suffix: "" },

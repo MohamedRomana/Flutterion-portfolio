@@ -1,9 +1,9 @@
-# Flutterion — Flutter Developer Portfolio
+# Mohamed Romana — Flutter Developer Portfolio
 
 > **Performance in Motion** — a premium portfolio for **Mohamed Romana**, Flutter Developer.
 
 Built with Next.js (App Router), TypeScript, Tailwind CSS v4, Motion for React, and lucide-react.
-Dark mode by default, light mode toggle (persisted), 10 real Flutter projects with dedicated case studies.
+Dark mode by default, light mode toggle (persisted), 12 real Flutter projects with dedicated case studies.
 
 ## Tech stack
 
@@ -44,7 +44,7 @@ src/
   lib/                 # cn() helper
   types/               # shared content types
 public/
-  logo.png             # supplied Flutterion logo (used as-is)
+  logo.png             # supplied logo asset
   projects/<slug>/*.jpg# real app screenshots
 ```
 

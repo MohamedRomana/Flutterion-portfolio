@@ -38,19 +38,20 @@ export async function generateMetadata({
   if (!project) return { title: "Project Not Found" };
 
   const title = `${project.name} — ${project.category}`;
+  const cover = project.cover ?? `/screens/${project.slug}/1.jpg`;
   return {
     title,
     description: project.overview.slice(0, 160),
     openGraph: {
-      title: `${project.name} | Flutterion`,
+      title: `${project.name} | Mohamed Romana`,
       description: project.tagline,
-      images: [{ url: `/screens/${project.slug}/1.jpg` }],
+      images: [{ url: cover }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${project.name} | Flutterion`,
+      title: `${project.name} | Mohamed Romana`,
       description: project.tagline,
-      images: [`/screens/${project.slug}/1.jpg`],
+      images: [cover],
     },
   };
 }
@@ -109,6 +110,8 @@ export default async function ProjectPage({
 
   const { prev, next } = getAdjacentProjects(slug);
   const second = Math.min(2, project.imageCount);
+  const coverMain = project.cover ?? `/screens/${project.slug}/1.jpg`;
+  const coverSecondary = project.coverAlt ?? `/screens/${project.slug}/${second}.jpg`;
 
   const facts = [
     { label: "Category", value: project.category },
@@ -188,14 +191,14 @@ export default async function ProjectPage({
                 <div className="relative mx-auto flex max-w-xs items-center justify-center">
                   <div className="w-[42%] translate-y-4 -rotate-6">
                     <PhoneFrame
-                      src={`/screens/${project.slug}/${second}.jpg`}
+                      src={coverSecondary}
                       alt={`${project.name} secondary screen`}
                       sizes="160px"
                     />
                   </div>
                   <div className="-ml-6 w-[50%] rotate-3">
                     <PhoneFrame
-                      src={`/screens/${project.slug}/1.jpg`}
+                      src={coverMain}
                       alt={`${project.name} main screen`}
                       priority
                       sizes="200px"
@@ -390,6 +393,7 @@ export default async function ProjectPage({
             <ProjectGallery
               slug={project.slug}
               imageCount={project.imageCount}
+              groups={project.screenshotGroups}
               name={project.name}
               accent={project.accent}
             />
