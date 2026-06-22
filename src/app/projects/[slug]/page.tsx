@@ -188,23 +188,35 @@ export default async function ProjectPage({
                 }}
               >
                 <div className="bg-dot pointer-events-none absolute inset-0 opacity-40" />
-                <div className="relative mx-auto flex max-w-xs items-center justify-center">
-                  <div className="w-[42%] translate-y-4 -rotate-6">
-                    <PhoneFrame
-                      src={coverSecondary}
-                      alt={`${project.name} secondary screen`}
-                      sizes="160px"
-                    />
-                  </div>
-                  <div className="-ml-6 w-[50%] rotate-3">
+                {project.storeShots ? (
+                  <div className="relative mx-auto w-[80%] max-w-[260px]">
                     <PhoneFrame
                       src={coverMain}
-                      alt={`${project.name} main screen`}
+                      alt={`${project.name} app preview`}
+                      store
                       priority
-                      sizes="200px"
+                      sizes="260px"
                     />
                   </div>
-                </div>
+                ) : (
+                  <div className="relative mx-auto flex max-w-xs items-center justify-center">
+                    <div className="w-[42%] translate-y-4 -rotate-6">
+                      <PhoneFrame
+                        src={coverSecondary}
+                        alt={`${project.name} secondary screen`}
+                        sizes="160px"
+                      />
+                    </div>
+                    <div className="-ml-6 w-[50%] rotate-3">
+                      <PhoneFrame
+                        src={coverMain}
+                        alt={`${project.name} main screen`}
+                        priority
+                        sizes="200px"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </Reveal>
           </div>
@@ -394,6 +406,7 @@ export default async function ProjectPage({
               slug={project.slug}
               imageCount={project.imageCount}
               groups={project.screenshotGroups}
+              store={project.storeShots}
               name={project.name}
               accent={project.accent}
             />

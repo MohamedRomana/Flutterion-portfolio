@@ -19,6 +19,7 @@ export const projects: Project[] = [
     platform: "both",
     accent: "#0ea5e9",
     imageCount: 4,
+    storeShots: true,
     featured: true,
     isPrivate: false,
     links: {
@@ -216,6 +217,7 @@ export const projects: Project[] = [
     platform: "both",
     accent: "#22d3ee",
     imageCount: 5,
+    storeShots: true,
     featured: true,
     isPrivate: false,
     links: {
@@ -262,7 +264,8 @@ export const projects: Project[] = [
     category: "E-commerce",
     platform: "both",
     accent: "#7c3aed",
-    imageCount: 6,
+    imageCount: 4,
+    storeShots: true,
     featured: true,
     isPrivate: false,
     links: {
@@ -307,7 +310,8 @@ export const projects: Project[] = [
     category: "On-Demand Services",
     platform: "both",
     accent: "#0ea5e9",
-    imageCount: 5,
+    imageCount: 6,
+    storeShots: true,
     featured: false,
     isPrivate: false,
     links: {
@@ -558,9 +562,10 @@ export const projects: Project[] = [
     name: "Naji Restaurant",
     tagline: "Mobile ordering app for Naji Al-Harbi — authentic kebab, a heritage taste since 1951.",
     category: "Restaurant",
-    platform: "ios",
+    platform: "both",
     accent: "#22d3ee",
     imageCount: 4,
+    storeShots: true,
     featured: false,
     isPrivate: false,
     // NOTE: Not described in the CV — copy below is grounded in the published
@@ -569,6 +574,7 @@ export const projects: Project[] = [
     links: {
       appStore:
         "https://apps.apple.com/us/app/%D9%85%D8%B7%D8%A7%D8%B9%D9%85-%D9%86%D8%A7%D8%AC%D9%8A-%D8%A7%D9%84%D8%AD%D8%B1%D8%A8%D9%8A-%D9%84%D9%84%D9%83%D8%A8%D8%A7%D8%A8/id6447362219",
+      playStore: "https://play.google.com/store/apps/details?id=com.efada.kababNagy",
     },
     overview:
       "A mobile ordering app for Naji Al-Harbi Restaurant — a heritage kebab eatery serving its authentic taste since 1951 — letting customers browse the menu and order their favourite dishes from their phone.",

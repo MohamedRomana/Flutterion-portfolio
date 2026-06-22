@@ -155,8 +155,8 @@ export function Hero() {
               className="absolute left-2 top-10 w-[44%] rotate-[-8deg]"
             >
               <PhoneFrame
-                src="/screens/alaswak/1.jpg"
-                alt="Alaswak e-commerce app"
+                src="/screens/speak-mate/1.jpg"
+                alt="Speak Mate speech-therapy app"
                 sizes="180px"
               />
             </motion.div>
@@ -165,8 +165,8 @@ export function Hero() {
               className="absolute right-1 top-16 w-[44%] rotate-[9deg]"
             >
               <PhoneFrame
-                src="/screens/almustarih/1.jpg"
-                alt="Almustarih marketplace app"
+                src="/screens/hidaya/1.jpg"
+                alt="Hidaya Quran companion app"
                 sizes="180px"
               />
             </motion.div>
@@ -175,8 +175,8 @@ export function Hero() {
               className="absolute left-1/2 top-2 w-[50%] -translate-x-1/2"
             >
               <PhoneFrame
-                src="/screens/adec-request/2.jpg"
-                alt="AdEC Request enterprise app"
+                src="/screens/satha/client/1.jpg"
+                alt="Satha roadside-rescue app"
                 priority
                 sizes="220px"
               />
@@ -186,8 +186,8 @@ export function Hero() {
           {/* Mobile phone preview */}
           <div className="mx-auto w-40 sm:hidden">
             <PhoneFrame
-              src="/screens/adec-request/2.jpg"
-              alt="AdEC Request enterprise app"
+              src="/screens/satha/client/1.jpg"
+              alt="Satha roadside-rescue app"
               priority
               sizes="160px"
             />

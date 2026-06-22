@@ -12,13 +12,35 @@ export function PhoneFrame({
   priority = false,
   sizes = "(max-width: 768px) 60vw, 280px",
   className,
+  store = false,
 }: {
   src: string;
   alt: string;
   priority?: boolean;
   sizes?: string;
   className?: string;
+  /** Store/marketing graphic that already includes its own frame (9:16). */
+  store?: boolean;
 }) {
+  if (store) {
+    return (
+      <div
+        className={cn(
+          "relative aspect-[9/16] w-full overflow-hidden rounded-3xl border border-border-strong bg-card shadow-[0_30px_60px_-22px_rgba(0,0,0,0.5)] ring-1 ring-white/5",
+          className,
+        )}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          priority={priority}
+          sizes={sizes}
+          className="object-cover"
+        />
+      </div>
+    );
+  }
   return (
     <div
       className={cn(

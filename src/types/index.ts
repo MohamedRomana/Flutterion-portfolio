@@ -72,6 +72,12 @@ export interface Project {
    * of a single flat grid built from `imageCount`.
    */
   screenshotGroups?: ScreenshotGroup[];
+  /**
+   * True when the screenshots are pre-composed store/marketing graphics that
+   * already include a device frame and background (9:16). These are shown
+   * as-is — without the site's PhoneFrame bezel and at their native ratio.
+   */
+  storeShots?: boolean;
   featured: boolean;
   /** Government / NDA work with no public links. */
   isPrivate: boolean;
