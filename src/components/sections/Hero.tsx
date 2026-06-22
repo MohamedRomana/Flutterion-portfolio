@@ -152,50 +152,89 @@ export function Hero() {
 
             <motion.div
               style={{ y: yBack }}
-              className="absolute left-2 top-14 w-[46%] rotate-[-8deg]"
+              className="absolute left-2 top-14 w-[46%]"
             >
-              <PhoneFrame
-                src="/screens/alaswak/1.jpg"
-                alt="Alaswak e-commerce app"
-                store
-                sizes="190px"
-              />
+              <motion.div
+                className="rotate-[-8deg]"
+                initial={reduce ? false : { opacity: 0, y: 40, scale: 0.9 }}
+                animate={reduce ? undefined : { opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.8, ease: EASE, delay: 0.35 }}
+              >
+                <motion.div
+                  animate={reduce ? undefined : { y: [0, -12, 0] }}
+                  transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+                >
+                  <PhoneFrame
+                    src="/screens/alaswak/1.jpg"
+                    alt="Alaswak e-commerce app home screen"
+                    store
+                    sizes="190px"
+                  />
+                </motion.div>
+              </motion.div>
             </motion.div>
             <motion.div
               style={{ y: yBack }}
-              className="absolute right-1 top-20 w-[46%] rotate-[9deg]"
+              className="absolute right-1 top-20 w-[46%]"
             >
-              <PhoneFrame
-                src="/screens/almustarih/1.jpg"
-                alt="Almustarih marketplace app"
-                store
-                sizes="190px"
-              />
+              <motion.div
+                className="rotate-[9deg]"
+                initial={reduce ? false : { opacity: 0, y: 40, scale: 0.9 }}
+                animate={reduce ? undefined : { opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.8, ease: EASE, delay: 0.45 }}
+              >
+                <motion.div
+                  animate={reduce ? undefined : { y: [0, -14, 0] }}
+                  transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 1.1 }}
+                >
+                  <PhoneFrame
+                    src="/screens/almustarih/4.jpg"
+                    alt="Almustarih marketplace app home screen"
+                    store
+                    sizes="190px"
+                  />
+                </motion.div>
+              </motion.div>
             </motion.div>
             <motion.div
               style={{ y: yFront }}
               className="absolute left-1/2 top-4 w-[52%] -translate-x-1/2"
             >
-              <PhoneFrame
-                src="/screens/adec-request/1.jpg"
-                alt="AdEC Request enterprise app"
-                store
-                priority
-                sizes="230px"
-              />
+              <motion.div
+                initial={reduce ? false : { opacity: 0, y: 48, scale: 0.9 }}
+                animate={reduce ? undefined : { opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.85, ease: EASE, delay: 0.2 }}
+              >
+                <motion.div
+                  animate={reduce ? undefined : { y: [0, -16, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+                >
+                  <PhoneFrame
+                    src="/screens/adec-request/2.jpg"
+                    alt="AdEC Request enterprise app home screen"
+                    store
+                    priority
+                    sizes="230px"
+                  />
+                </motion.div>
+              </motion.div>
             </motion.div>
           </motion.div>
 
           {/* Mobile phone preview */}
-          <div className="mx-auto w-48 sm:hidden">
+          <motion.div
+            className="mx-auto w-48 sm:hidden"
+            animate={reduce ? undefined : { y: [0, -10, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          >
             <PhoneFrame
-              src="/screens/adec-request/1.jpg"
-              alt="AdEC Request enterprise app"
+              src="/screens/adec-request/2.jpg"
+              alt="AdEC Request enterprise app home screen"
               store
               priority
               sizes="190px"
             />
-          </div>
+          </motion.div>
         </div>
       </Container>
 
