@@ -349,6 +349,7 @@ export const projects: Project[] = [
     platform: "both",
     accent: "#22d3ee",
     imageCount: 5,
+    storeShots: true,
     featured: false,
     isPrivate: false,
     links: {
@@ -392,6 +393,7 @@ export const projects: Project[] = [
     platform: "android",
     accent: "#7c3aed",
     imageCount: 5,
+    storeShots: true,
     featured: false,
     isPrivate: false,
     links: {
@@ -433,7 +435,8 @@ export const projects: Project[] = [
     category: "Islamic / Lifestyle",
     platform: "android",
     accent: "#22d3ee",
-    imageCount: 6,
+    imageCount: 10,
+    storeShots: true,
     featured: false,
     isPrivate: false,
     links: {
@@ -476,6 +479,7 @@ export const projects: Project[] = [
     platform: "android",
     accent: "#0ea5e9",
     imageCount: 6,
+    storeShots: true,
     featured: false,
     isPrivate: false,
     links: {
@@ -517,7 +521,8 @@ export const projects: Project[] = [
     category: "EdTech",
     platform: "android",
     accent: "#7c3aed",
-    imageCount: 4,
+    imageCount: 6,
+    storeShots: true,
     featured: false,
     isPrivate: false,
     links: {
