@@ -526,7 +526,7 @@ export const projects: Project[] = [
     featured: false,
     isPrivate: false,
     links: {
-      drive: "https://drive.google.com/drive/folders/10m37sLUq7YgAkeDZJk5sFFkMZWCVc0I5QXiNyXR6jCUwxjE9L6gN84-f6SK2jAkVj4RsiMSR",
+      drive: "https://drive.google.com/file/d/1wDzPqvvhYxHkV7CgI4j_X48qMAXvNwYJ/view",
     },
     overview:
       "Unicourse is a smart learning companion designed to make the educational journey simpler, more organised, and more engaging. It helps learners discover courses, access learning materials, follow their progress, and stay on track — all in one smooth, easy-to-use experience.",
