@@ -521,12 +521,12 @@ export const projects: Project[] = [
     category: "EdTech",
     platform: "android",
     accent: "#7c3aed",
-    imageCount: 6,
+    imageCount: 9,
     storeShots: true,
     featured: false,
     isPrivate: false,
     links: {
-      drive: "https://drive.google.com/file/d/14o8DWu8C1HTQ7ZLoan9gLcMpi3qRS-aP/view",
+      drive: "https://drive.google.com/drive/folders/10m37sLUq7YgAkeDZJk5sFFkMZWCVc0I5QXiNyXR6jCUwxjE9L6gN84-f6SK2jAkVj4RsiMSR",
     },
     overview:
       "Unicourse is a smart learning companion designed to make the educational journey simpler, more organised, and more engaging. It helps learners discover courses, access learning materials, follow their progress, and stay on track — all in one smooth, easy-to-use experience.",
