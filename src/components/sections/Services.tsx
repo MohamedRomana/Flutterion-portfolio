@@ -28,6 +28,7 @@ export function Services() {
       <Container>
         <SectionHeading
           eyebrow="Services"
+          index="08"
           title={
             <>
               How I can <span className="text-gradient">help you ship</span>

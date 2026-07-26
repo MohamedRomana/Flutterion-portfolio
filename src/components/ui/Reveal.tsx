@@ -4,12 +4,12 @@ import { motion, useReducedMotion, type Variants } from "motion/react";
 
 const EASE = [0.21, 0.47, 0.32, 0.98] as const;
 
-/** Fade-and-rise reveal that fires once when scrolled into view. */
+/** Fade-rise-and-sharpen reveal that fires once when scrolled into view. */
 export function Reveal({
   children,
   className,
   delay = 0,
-  y = 24,
+  y = 30,
   as = "div",
 }: {
   children: React.ReactNode;
@@ -24,10 +24,10 @@ export function Reveal({
   return (
     <MotionTag
       className={className}
-      initial={reduce ? false : { opacity: 0, y }}
-      whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.6, delay, ease: EASE }}
+      initial={reduce ? false : { opacity: 0, y, filter: "blur(6px)" }}
+      whileInView={reduce ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, margin: "-70px" }}
+      transition={{ duration: 0.7, delay, ease: EASE }}
     >
       {children}
     </MotionTag>
@@ -37,12 +37,17 @@ export function Reveal({
 /** Container that staggers its <Reveal>-like children via variants. */
 const containerVariants: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
+  show: { transition: { staggerChildren: 0.09 } },
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: EASE } },
+  hidden: { opacity: 0, y: 26, filter: "blur(6px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.6, ease: EASE },
+  },
 };
 
 export function StaggerGroup({

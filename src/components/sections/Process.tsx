@@ -23,6 +23,7 @@ export function Process() {
       <Container>
         <SectionHeading
           eyebrow="Process"
+          index="06"
           title={
             <>
               How an app goes from <span className="text-gradient">idea to store</span>

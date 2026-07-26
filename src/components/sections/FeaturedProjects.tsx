@@ -120,6 +120,7 @@ export function FeaturedProjects() {
       <Container>
         <SectionHeading
           eyebrow="Featured Work"
+          index="02"
           title={
             <>
               Selected <span className="text-gradient">case studies</span>

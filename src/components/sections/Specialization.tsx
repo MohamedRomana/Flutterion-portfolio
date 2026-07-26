@@ -63,6 +63,7 @@ export function Specialization() {
       <Container>
         <SectionHeading
           eyebrow="Specialization"
+          index="01"
           title={
             <>
               Built for <span className="text-gradient">mobile excellence</span>

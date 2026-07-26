@@ -22,6 +22,7 @@ export function AllProjects() {
       <Container>
         <SectionHeading
           eyebrow="All Projects"
+          index="03"
           title={
             <>
               Everything I&apos;ve <span className="text-gradient">built</span>

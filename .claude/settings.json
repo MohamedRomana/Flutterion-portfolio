@@ -4,7 +4,13 @@
       "Bash(ls -la \"D:/New folder/New folder/unicourse screenshots\" 2>/dev/null || echo \"PATH NOT FOUND\")",
       "Read(//d/New folder/New folder/unicourse screenshots/**)",
       "Bash(node -e ' *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "WebFetch(domain:restudios.xyz)",
+      "Bash(cat /tmp/dev.log 2>/dev/null | tail -20 || echo \"no log\")",
+      "Read(//tmp/**)",
+      "Bash(taskkill //F //IM node.exe //FI \"WINDOWTITLE eq *\")",
+      "Bash(awk '{print $1}')",
+      "Bash(xargs -r kill)"
     ]
   }
 }

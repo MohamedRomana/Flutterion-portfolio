@@ -5,6 +5,7 @@ import { ThemeProvider, themeInitScript } from "@/components/providers/ThemeProv
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { ScrollTrail } from "@/components/ui/ScrollTrail";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { Loader } from "@/components/ui/Loader";
 
@@ -93,6 +94,7 @@ export default function RootLayout({
           <Loader />
           <CustomCursor />
           <ScrollProgress />
+          <ScrollTrail />
           <a
             href="#main"
             className="sr-only rounded-lg bg-primary px-4 py-2 text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100]"

@@ -3,12 +3,15 @@ import { Reveal } from "./Reveal";
 
 export function SectionHeading({
   eyebrow,
+  index,
   title,
   description,
   align = "center",
   className,
 }: {
   eyebrow: string;
+  /** Editorial section number, e.g. "01". */
+  index?: string;
   title: React.ReactNode;
   description?: string;
   align?: "center" | "left";
@@ -17,19 +20,20 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "flex flex-col gap-4",
+        "flex flex-col gap-5",
         align === "center" ? "items-center text-center" : "items-start text-left",
         className,
       )}
     >
       <Reveal>
-        <span className="inline-flex items-center gap-2 rounded-full border border-border-strong bg-card px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-primary">
-          <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden />
-          {eyebrow}
+        <span className="inline-flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.28em] text-muted">
+          {index && <span className="text-primary">{index}</span>}
+          <span className="h-px w-8 bg-border-strong" aria-hidden />
+          <span className="text-foreground/80">{eyebrow}</span>
         </span>
       </Reveal>
       <Reveal delay={0.05}>
-        <h2 className="max-w-3xl text-balance text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+        <h2 className="max-w-4xl text-balance text-4xl font-bold leading-[1.02] tracking-tight sm:text-5xl md:text-6xl">
           {title}
         </h2>
       </Reveal>

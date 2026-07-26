@@ -14,6 +14,7 @@ export function Experience() {
       <Container>
         <SectionHeading
           eyebrow="Journey"
+          index="07"
           title={
             <>
               Experience &amp; <span className="text-gradient">education</span>

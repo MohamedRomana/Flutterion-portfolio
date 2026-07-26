@@ -32,6 +32,7 @@ export function Skills() {
       <Container>
         <SectionHeading
           eyebrow="Engineering"
+          index="04"
           title={
             <>
               The Flutter <span className="text-gradient">engineering stack</span>
