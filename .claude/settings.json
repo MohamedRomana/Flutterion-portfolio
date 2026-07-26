@@ -20,7 +20,8 @@
       "Bash(taskkill //F //IM msedge.exe)",
       "Bash(npm i *)",
       "Bash(node -e \"console.log\\('puppeteer-core:', require.resolve\\('puppeteer-core'\\)\\)\")",
-      "Bash(taskkill //F //IM node.exe)"
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(OUT=\"C:/Users/Dell/AppData/Local/Temp/claude/d--Projects-flutterion-portfolio/071ed5af-6a4c-4f09-8674-48fd079d5cac/scratchpad\" *)"
     ]
   }
 }

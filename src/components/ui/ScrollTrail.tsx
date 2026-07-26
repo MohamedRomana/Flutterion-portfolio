@@ -12,25 +12,27 @@ import {
 } from "motion/react";
 
 /**
- * A wavy vertical path spanning the viewport with a glowing ball that travels
- * along it as the page scrolls. The traversed part of the path lights up
- * behind the ball. Purely decorative, desktop-only, and disabled for users
- * who prefer reduced motion.
+ * A glowing "light road" that recedes into the distance in 3D perspective,
+ * with a comet head that travels from the far vanishing point toward the
+ * viewer as the page scrolls — weaving left/right along the eye-line.
  *
- * The SVG uses a 0..100 x 0..100 viewBox with preserveAspectRatio="none", so
- * a point's (x, y) in user units maps directly to (x%, y%) of the container —
- * which is how the HTML ball is positioned in sync with the SVG path.
+ * The path lives on a flat plane (viewBox 0..100 on both axes) that is tilted
+ * back with rotateX, so the top of the path (y≈0) sits far away and the bottom
+ * (y≈100) comes toward the camera. The comet is billboarded (counter-rotated)
+ * so it stays a round glow. Desktop-only and disabled for reduced motion.
  */
 const PATH =
-  "M50 0 C 12 10, 88 20, 50 30 C 12 40, 88 50, 50 60 C 12 70, 88 80, 50 90 C 30 96, 60 98, 50 100";
+  "M50 0 C 24 18, 76 30, 50 46 C 24 62, 76 76, 50 92 C 44 96, 56 98, 50 100";
+
+const TILT = 62; // degrees the road-plane leans back
 
 export function ScrollTrail() {
   const reduce = useReducedMotion();
   const pathRef = useRef<SVGPathElement>(null);
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, {
-    stiffness: 90,
-    damping: 26,
+    stiffness: 80,
+    damping: 24,
     mass: 0.5,
   });
 
@@ -55,8 +57,17 @@ export function ScrollTrail() {
     <div
       aria-hidden
       className="pointer-events-none fixed inset-0 -z-10 hidden overflow-hidden lg:block"
+      style={{ perspective: "1100px", perspectiveOrigin: "50% 42%" }}
     >
-      <div className="absolute inset-y-0 left-1/2 w-[min(72vw,920px)] -translate-x-1/2">
+      {/* The tilted road-plane. Sized larger than the viewport and pushed down
+          so the near end runs off the bottom edge toward the viewer. */}
+      <div
+        className="absolute left-1/2 top-[38%] h-[150%] w-[min(150vw,1700px)] -translate-x-1/2"
+        style={{
+          transform: `rotateX(${TILT}deg)`,
+          transformOrigin: "50% 0%",
+        }}
+      >
         <svg
           className="h-full w-full"
           viewBox="0 0 100 100"
@@ -64,61 +75,64 @@ export function ScrollTrail() {
           fill="none"
         >
           <defs>
-            <linearGradient id="trail-gradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="var(--primary)" />
-              <stop offset="55%" stopColor="var(--cyan)" />
-              <stop offset="100%" stopColor="var(--purple)" />
+            <linearGradient
+              id="trail-depth"
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="100"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop offset="0%" stopColor="var(--purple)" stopOpacity="0" />
+              <stop offset="35%" stopColor="var(--primary)" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="var(--cyan)" stopOpacity="1" />
             </linearGradient>
           </defs>
 
-          {/* Faint dashed "path ahead" */}
+          {/* Faint dashed "road ahead" */}
           <path
             d={PATH}
             stroke="var(--cyan)"
-            strokeOpacity="0.22"
-            strokeWidth="1"
-            strokeDasharray="1.5 4"
+            strokeOpacity="0.18"
+            strokeWidth="0.6"
+            strokeDasharray="1.4 3.5"
             strokeLinecap="round"
-            vectorEffect="non-scaling-stroke"
           />
-          {/* Soft wide glow under the lit beam */}
+          {/* Soft wide bloom under the lit beam */}
           <motion.path
             d={PATH}
-            stroke="url(#trail-gradient)"
-            strokeWidth="7"
+            stroke="url(#trail-depth)"
+            strokeWidth="4"
             strokeLinecap="round"
-            vectorEffect="non-scaling-stroke"
-            style={{ pathLength: progress, filter: "blur(6px)", opacity: 0.5 }}
+            style={{ pathLength: progress, filter: "blur(4px)", opacity: 0.55 }}
           />
-          {/* Bright lit beam that grows behind the ball */}
+          {/* Bright lit beam that grows behind the comet */}
           <motion.path
             ref={pathRef}
             d={PATH}
-            stroke="url(#trail-gradient)"
-            strokeWidth="2.4"
+            stroke="url(#trail-depth)"
+            strokeWidth="1.1"
             strokeLinecap="round"
-            vectorEffect="non-scaling-stroke"
             style={{
               pathLength: progress,
-              filter: "drop-shadow(0 0 5px var(--cyan))",
+              filter: "drop-shadow(0 0 3px var(--cyan))",
             }}
           />
         </svg>
-      </div>
 
-      {/* Travelling comet head, positioned against the same box as the SVG */}
-      <div className="absolute inset-y-0 left-1/2 w-[min(72vw,920px)] -translate-x-1/2">
+        {/* Comet head, billboarded so it stays a round glow despite the tilt */}
         <motion.div
-          className="absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white"
+          className="absolute h-4 w-4 rounded-full bg-white"
           style={{
             left,
             top,
+            translateX: "-50%",
+            translateY: "-50%",
+            rotateX: -TILT,
             boxShadow:
-              "0 0 0 3px color-mix(in srgb, var(--cyan) 35%, transparent), 0 0 16px 4px var(--cyan), 0 0 40px 12px var(--glow)",
+              "0 0 0 3px color-mix(in srgb, var(--cyan) 35%, transparent), 0 0 18px 5px var(--cyan), 0 0 46px 14px var(--glow)",
           }}
-        >
-          <span className="absolute inset-0 animate-ping rounded-full bg-cyan/50" />
-        </motion.div>
+        />
       </div>
     </div>
   );
