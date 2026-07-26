@@ -56,7 +56,7 @@ export function ScrollTrail() {
       aria-hidden
       className="pointer-events-none fixed inset-0 -z-10 hidden overflow-hidden lg:block"
     >
-      <div className="absolute inset-y-0 left-1/2 w-[min(70vw,900px)] -translate-x-1/2 opacity-[0.5]">
+      <div className="absolute inset-y-0 left-1/2 w-[min(72vw,920px)] -translate-x-1/2">
         <svg
           className="h-full w-full"
           viewBox="0 0 100 100"
@@ -71,39 +71,53 @@ export function ScrollTrail() {
             </linearGradient>
           </defs>
 
-          {/* Faint full path */}
+          {/* Faint dashed "path ahead" */}
           <path
             d={PATH}
-            stroke="var(--border-strong)"
-            strokeWidth="1.4"
+            stroke="var(--cyan)"
+            strokeOpacity="0.22"
+            strokeWidth="1"
+            strokeDasharray="1.5 4"
             strokeLinecap="round"
             vectorEffect="non-scaling-stroke"
           />
-          {/* Lit portion that grows behind the ball */}
+          {/* Soft wide glow under the lit beam */}
+          <motion.path
+            d={PATH}
+            stroke="url(#trail-gradient)"
+            strokeWidth="7"
+            strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
+            style={{ pathLength: progress, filter: "blur(6px)", opacity: 0.5 }}
+          />
+          {/* Bright lit beam that grows behind the ball */}
           <motion.path
             ref={pathRef}
             d={PATH}
             stroke="url(#trail-gradient)"
-            strokeWidth="2"
+            strokeWidth="2.4"
             strokeLinecap="round"
             vectorEffect="non-scaling-stroke"
-            style={{ pathLength: progress }}
+            style={{
+              pathLength: progress,
+              filter: "drop-shadow(0 0 5px var(--cyan))",
+            }}
           />
         </svg>
       </div>
 
-      {/* Travelling ball, positioned against the same box as the SVG */}
-      <div className="absolute inset-y-0 left-1/2 w-[min(70vw,900px)] -translate-x-1/2 opacity-90">
+      {/* Travelling comet head, positioned against the same box as the SVG */}
+      <div className="absolute inset-y-0 left-1/2 w-[min(72vw,920px)] -translate-x-1/2">
         <motion.div
-          className="absolute h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan"
+          className="absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white"
           style={{
             left,
             top,
             boxShadow:
-              "0 0 0 4px color-mix(in srgb, var(--cyan) 20%, transparent), 0 0 22px 6px var(--glow)",
+              "0 0 0 3px color-mix(in srgb, var(--cyan) 35%, transparent), 0 0 16px 4px var(--cyan), 0 0 40px 12px var(--glow)",
           }}
         >
-          <span className="absolute inset-0 animate-ping rounded-full bg-cyan/60" />
+          <span className="absolute inset-0 animate-ping rounded-full bg-cyan/50" />
         </motion.div>
       </div>
     </div>

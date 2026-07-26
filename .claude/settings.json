@@ -10,7 +10,17 @@
       "Read(//tmp/**)",
       "Bash(taskkill //F //IM node.exe //FI \"WINDOWTITLE eq *\")",
       "Bash(awk '{print $1}')",
-      "Bash(xargs -r kill)"
+      "Bash(xargs -r kill)",
+      "Bash(node -e \"try{console.log\\('playwright:',require.resolve\\('playwright'\\)\\)}catch\\(e\\){console.log\\('no playwright'\\)}\")",
+      "Bash(node -e \"try{console.log\\('puppeteer:',require.resolve\\('puppeteer'\\)\\)}catch\\(e\\){console.log\\('no puppeteer'\\)}\")",
+      "Bash(node -e \"try{console.log\\('puppeteer-core:',require.resolve\\('puppeteer-core'\\)\\)}catch\\(e\\){console.log\\('no puppeteer-core'\\)}\")",
+      "Read(//c/Program Files/Google/Chrome/Application/**)",
+      "Read(//c/Program Files \\\\\\(x86\\\\\\)/Microsoft/Edge/Application/**)",
+      "Bash('/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe' --headless=new --disable-gpu --no-sandbox --hide-scrollbars --window-size=1440,1400 --screenshot=C:/Users/Dell/AppData/Local/Temp/claude/d--Projects-flutterion-portfolio/071ed5af-6a4c-4f09-8674-48fd079d5cac/scratchpad/ref-hero.png https://restudios.xyz/)",
+      "Bash(taskkill //F //IM msedge.exe)",
+      "Bash(npm i *)",
+      "Bash(node -e \"console.log\\('puppeteer-core:', require.resolve\\('puppeteer-core'\\)\\)\")",
+      "Bash(taskkill //F //IM node.exe)"
     ]
   }
 }
