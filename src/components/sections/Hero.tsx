@@ -297,8 +297,8 @@ export function Hero() {
                   </span>
                 </span>
                 <span>
-                  <span className="font-semibold text-foreground">{stats[1].value} apps</span> live on
-                  the App Store &amp; Google Play
+                  <span className="font-semibold text-foreground">{stats[1].value} apps</span>{" "}
+                  live on the App Store &amp; Google Play
                 </span>
               </div>
             </motion.div>

@@ -34,7 +34,7 @@ execFileSync(browser, [
   "--force-device-scale-factor=2",
   "--window-size=794,1123",
   `--screenshot=${resolve("public/cv-preview.png")}`,
-  src,
+  `${src}#preview`,
 ]);
 
 console.log("CV PDF + preview generated in /public");

@@ -79,7 +79,7 @@ export function AllProjects() {
               Every app, <span className="serif text-primary">one list.</span>
             </>
           }
-          description="Store-published apps first, followed by Android builds shared as APKs. Hover a row to preview, click to open the case study."
+          description="Store-published apps first, followed by Android builds shared as APKs. Open any row for the full case study."
         />
 
         <div

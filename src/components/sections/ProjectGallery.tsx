@@ -12,7 +12,7 @@ export function ProjectGallery({
   slug,
   imageCount,
   groups,
-  store = false,
+  ratio,
   name,
   accent,
 }: {
@@ -20,13 +20,11 @@ export function ProjectGallery({
   imageCount: number;
   /** When provided, screenshots render as labelled sections (by role/flow). */
   groups?: ScreenshotGroup[];
-  /** Store/marketing graphics (9:16) shown without the phone bezel crop. */
-  store?: boolean;
+  /** width / height of the screenshots. */
+  ratio: number;
   name: string;
   accent: string;
 }) {
-  const tileAspect = store ? "aspect-[9/16]" : "aspect-[9/19.5]";
-  const tileObject = store ? "object-cover object-center" : "object-cover object-top";
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
   const reduce = useReducedMotion();
@@ -110,15 +108,16 @@ export function ProjectGallery({
                     type="button"
                     onClick={() => openAt(flatIndex)}
                     aria-label={`Open ${name} ${section.label ? section.label + " " : ""}screenshot ${i + 1}`}
-                    data-cursor="hover"
-                    className={`group relative ${tileAspect} overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/40`}
+                    data-cursor-label="Zoom"
+                    style={{ aspectRatio: String(ratio) }}
+                    className="group relative overflow-hidden rounded-2xl border border-border bg-card transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1.5 hover:border-foreground/30"
                   >
                     <Image
                       src={src}
                       alt={`${name} ${section.label} screenshot ${i + 1}`}
                       fill
                       sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 22vw"
-                      className={`${tileObject} transition-transform duration-500 group-hover:scale-105`}
+                      className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
                     />
                     <span
                       className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -183,19 +182,18 @@ export function ProjectGallery({
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.25 }}
               onClick={(e) => e.stopPropagation()}
-              className={`relative h-[78vh] w-auto overflow-hidden shadow-2xl ${
-                store
-                  ? "rounded-3xl border border-white/10"
-                  : "rounded-3xl border-[6px] border-slate-800"
-              }`}
-              style={{ aspectRatio: store ? "9 / 16" : "9 / 19.5" }}
+              className="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl"
+              style={{
+                aspectRatio: String(ratio),
+                width: `min(88vw, calc(82vh * ${ratio}))`,
+              }}
             >
               <Image
                 src={flat[index]}
                 alt={`${name} screenshot ${index + 1}`}
                 fill
-                sizes="40vh"
-                className={store ? "object-cover object-center" : "object-cover object-top"}
+                sizes="(max-width: 768px) 92vw, 45vh"
+                className="object-contain"
                 priority
               />
             </motion.div>

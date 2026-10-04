@@ -108,7 +108,7 @@ export function Navbar() {
                   <Link
                     href={`/#${link.id}`}
                     className={cn(
-                      "relative block rounded-full px-4 py-1.5 text-sm transition-colors duration-200",
+                      "relative isolate block rounded-full px-4 py-1.5 text-sm transition-colors duration-200",
                       isActive ? "text-background" : "text-muted hover:text-foreground",
                     )}
                   >

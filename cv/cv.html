@@ -39,7 +39,7 @@
   .dot { margin: 0 7px; }
 
   h2 {
-    margin-top: 15px;
+    margin-top: 12px;
     padding-bottom: 4px;
     border-bottom: 1.6px solid #1a1a1a;
     font-size: 12.5pt;
@@ -57,7 +57,7 @@
   .skills li { margin-top: 1.5px; }
   .skills b { font-weight: 700; }
 
-  .entry { margin-top: 9px; break-inside: avoid; }
+  .entry { margin-top: 8px; break-inside: avoid; }
   .entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
   .entry-title { font-weight: 700; font-size: 10.9pt; }
   .entry-title .cat { font-weight: 700; }
@@ -67,9 +67,11 @@
   ul.bullets { margin-top: 3px; padding-left: 20px; }
   ul.bullets li { margin-top: 1.5px; padding-left: 2px; }
   .intro { margin-top: 6px; font-style: italic; color: #555; }
-  .also { margin-top: 8px; }
   @media screen { body { padding: 13mm 0; } }
+  /* cv.html#preview renders page 1 only (used for the site preview image). */
+  .preview .projects { display: none; }
 </style>
+<script>if (location.hash === "#preview") document.documentElement.classList.add("preview");</script>
 </head>
 <body>
 <div class="page">
@@ -92,9 +94,8 @@
       commerce, service marketplaces, multi-store e-commerce, delivery, restaurant ordering, and travel.
     </p>
     <p>
-      Work primarily with Bloc / Cubit state management and the MVVM pattern, following SOLID principles, clean
-      code, and reusable, modular design. Experienced in integrating RESTful APIs with Dio / HTTP, with structured
-      error handling and performance-minded, responsive UI.
+      Work primarily with Bloc / Cubit and the MVVM pattern, following SOLID principles and clean, reusable, modular
+      code &mdash; integrating RESTful APIs through Dio / HTTP with structured error handling.
     </p>
     <p>
       Experienced in multi-role applications &mdash; including a five-role government workflow driven by a Finite State
@@ -115,7 +116,6 @@
       <li><b>Media:</b> Document, Photo &amp; Video Uploads, Audio Playback</li>
       <li><b>UI &amp; Localization:</b> flutter_screenutil, Responsive Design, Multi-Role UI, Arabic / English (RTL)</li>
       <li><b>Tools:</b> Git, GitHub, Android Studio, VS Code, Xcode, Postman, Figma, Adobe XD</li>
-      <li><b>Core Strengths:</b> Problem Solving, Performance Optimization, Production Stability</li>
     </ul>
   </section>
 
@@ -168,8 +168,7 @@
       <ul class="bullets">
         <li>Developed a large-scale application connecting contractors, consultants, engineers, and administrative branches in one system for engineering requests and project inspections.</li>
         <li>Implemented a multi-role workflow using Bloc and a Finite State Machine to manage complex request lifecycles across five user roles.</li>
-        <li>Built geolocation-based field inspections with Google Maps &amp; Geolocator and enterprise media uploads for documents, photos, and videos.</li>
-        <li>Integrated Firebase push notifications and real-time data synchronization between stakeholders at government-level integrity and performance.</li>
+        <li>Built geolocated field inspections (Google Maps, Geolocator), enterprise media uploads, and Firebase push notifications.</li>
       </ul>
     </div>
 
@@ -182,8 +181,7 @@
       <ul class="bullets">
         <li>Built an Arabic-first marketplace for authentic Najdi Sadu weaving, unifying training workshops, cultural activities, and a handcrafted-products store in one home hub.</li>
         <li>Implemented workshop discovery and booking with location-aware listings and category filters.</li>
-        <li>Built a categorised store with rich product-detail pages, quantity selection, fast checkout, and order tracking.</li>
-        <li>Delivered account management and push notifications with Bloc, Dio, and Firebase Cloud Messaging.</li>
+        <li>Built a categorised store with product details, checkout, order tracking, and push notifications.</li>
       </ul>
     </div>
 
@@ -194,9 +192,9 @@
       </div>
       <div class="links">Live on <a href="https://apps.apple.com/us/app/%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D8%B1%D9%8A%D8%AD/id6757157320">App Store</a> &amp; <a href="https://play.google.com/store/apps/details?id=com.efadh.almustarih">Google Play</a><span class="dot">•</span>Case study: <a href="https://flutterion-portfolio.vercel.app/projects/almustarih">flutterion-portfolio.vercel.app/projects/almustarih</a></div>
       <ul class="bullets">
-        <li>Developed a marketplace connecting car owners, spare-parts vendors, and service workshops &mdash; browse and buy parts, schedule maintenance, and track deliveries.</li>
-        <li>Built a multi-role system for clients, delivery drivers, and service centres with Bloc state management and Dio networking.</li>
-        <li>Implemented real-time delivery tracking with Google Maps plus Firebase push notifications and in-app messaging.</li>
+        <li>Developed a marketplace connecting car owners, spare-parts vendors, and service workshops.</li>
+        <li>Built a multi-role system for clients, drivers, and service centres with Bloc and Dio.</li>
+        <li>Implemented live delivery tracking on Google Maps, in-app messaging, and push notifications.</li>
       </ul>
     </div>
 
@@ -220,7 +218,7 @@
       <div class="links">Live on <a href="https://apps.apple.com/us/app/%D9%85%D8%AE%D9%80%D8%AF%D9%88%D9%85-%D9%85%D9%83%D9%81%D9%8A/id6739352807">App Store</a> &amp; <a href="https://play.google.com/store/apps/details?id=com.efadh.makhdom">Google Play</a><span class="dot">•</span>Case study: <a href="https://flutterion-portfolio.vercel.app/projects/makhdom">flutterion-portfolio.vercel.app/projects/makhdom</a></div>
       <ul class="bullets">
         <li>Developed an app connecting customers with professional technicians for daily services.</li>
-        <li>Built quick service requests, provider matching, and seamless in-app interaction between customers and providers.</li>
+        <li>Built quick service requests, provider matching, and in-app customer&ndash;provider interaction.</li>
       </ul>
     </div>
 
@@ -236,10 +234,29 @@
       </ul>
     </div>
 
-    <p class="also">
-      <b>Also shipped &mdash;</b>
-      Naji Restaurant, heritage kebab ordering app (<a href="https://apps.apple.com/us/app/%D9%85%D8%B7%D8%A7%D8%B9%D9%85-%D9%86%D8%A7%D8%AC%D9%8A-%D8%A7%D9%84%D8%AD%D8%B1%D8%A8%D9%8A-%D9%84%D9%84%D9%83%D8%A8%D8%A7%D8%A8/id6447362219">App Store</a> &amp; <a href="https://play.google.com/store/apps/details?id=com.efada.kababNagy">Google Play</a>)<span class="dot">•</span>Plan A, visa &amp; passport-renewal travel companion (<a href="https://play.google.com/store/apps/details?id=com.efadh.visa">Google Play</a>)
-    </p>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">NAJI AL-HARBI RESTAURANTS <span class="ar">(مطاعم ناجي الحربي)</span> &mdash; <span class="cat">Restaurant Ordering</span></span>
+        <span class="entry-right">Efadh For Web Solution</span>
+      </div>
+      <div class="links">Live on <a href="https://apps.apple.com/us/app/%D9%85%D8%B7%D8%A7%D8%B9%D9%85-%D9%86%D8%A7%D8%AC%D9%8A-%D8%A7%D9%84%D8%AD%D8%B1%D8%A8%D9%8A-%D9%84%D9%84%D9%83%D8%A8%D8%A7%D8%A8/id6447362219">App Store</a> &amp; <a href="https://play.google.com/store/apps/details?id=com.efada.kababNagy">Google Play</a><span class="dot">•</span>Case study: <a href="https://flutterion-portfolio.vercel.app/projects/naji-restaurant">flutterion-portfolio.vercel.app/projects/naji-restaurant</a></div>
+      <ul class="bullets">
+        <li>Built a branded mobile ordering app for a heritage kebab restaurant serving its authentic taste since 1951.</li>
+        <li>Implemented menu browsing and a short, familiar ordering flow that carries the restaurant&rsquo;s visual identity.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">PLAN A &mdash; <span class="cat">Travel &amp; Visa Services</span></span>
+        <span class="entry-right">Efadh For Web Solution</span>
+      </div>
+      <div class="links">Live on <a href="https://play.google.com/store/apps/details?id=com.efadh.visa">Google Play</a><span class="dot">•</span>Case study: <a href="https://flutterion-portfolio.vercel.app/projects/plan-a">flutterion-portfolio.vercel.app/projects/plan-a</a></div>
+      <ul class="bullets">
+        <li>Built a smart travel companion that makes visa applications and passport renewals simple, clear, and stress-free.</li>
+        <li>Implemented guided, step-by-step requirement flows that take travellers from planning through to approval.</li>
+      </ul>
+    </div>
   </section>
 
 </div>

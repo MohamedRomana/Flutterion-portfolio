@@ -100,6 +100,7 @@
   }
 
   html {
+    overflow-x: clip;
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
   }
@@ -229,7 +230,7 @@
 /* Film-grain overlay (SVG noise, no network request). */
 .grain {
   position: fixed;
-  inset: -50%;
+  inset: 0;
   z-index: 95;
   pointer-events: none;
   opacity: var(--grain-opacity);

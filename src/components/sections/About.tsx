@@ -18,7 +18,7 @@ export function About() {
   return (
     <Section id="about" ariaLabel="About">
       <Container>
-        <div className="grid gap-4 lg:auto-rows-[minmax(15rem,auto)] lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 lg:auto-rows-[minmax(15rem,auto)] lg:grid-cols-4">
           {/* Photo */}
           <Reveal className="lg:row-span-2">
             <div className="group relative h-full min-h-[26rem] overflow-hidden rounded-[1.75rem] border border-border-strong">

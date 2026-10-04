@@ -1,27 +1,16 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  ArrowLeft,
-  ArrowRight,
-  ArrowUpRight,
-  Lock,
-  Check,
-  Target,
-  Lightbulb,
-  UserCog,
-  Layers,
-  Apple,
-  Play,
-  Download,
-  AlertTriangle,
-} from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
 import { Container, Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
-import { PhoneFrame } from "@/components/ui/PhoneFrame";
+import { Eyebrow } from "@/components/ui/SectionHeading";
+import { PhoneFrame, coverOf, shotRatio } from "@/components/ui/PhoneFrame";
+import { StoreLinks } from "@/components/ui/StoreLinks";
 import { ProjectGallery } from "@/components/sections/ProjectGallery";
 import { ContactCTA } from "@/components/sections/ContactCTA";
-import { projects, getProject, getAdjacentProjects } from "@/data/projects";
+import { projects, getProject, getAdjacentProjects, isOnStore } from "@/data/projects";
 import type { Project } from "@/types";
 
 export function generateStaticParams() {
@@ -37,10 +26,9 @@ export async function generateMetadata({
   const project = getProject(slug);
   if (!project) return { title: "Project Not Found" };
 
-  const title = `${project.name} — ${project.category}`;
-  const cover = project.cover ?? `/screens/${project.slug}/1.jpg`;
+  const cover = coverOf(project);
   return {
-    title,
+    title: `${project.name} — ${project.category}`,
     description: project.overview.slice(0, 160),
     openGraph: {
       title: `${project.name} | Mohamed Romana`,
@@ -60,42 +48,11 @@ function platformLabel(platform: Project["platform"]) {
   return platform === "both" ? "iOS & Android" : platform === "ios" ? "iOS" : "Android";
 }
 
-function StoreLinks({ project }: { project: Project }) {
-  if (project.isPrivate) {
-    return (
-      <span className="inline-flex items-center gap-2 rounded-full border border-border-strong bg-card px-4 py-2.5 text-sm font-medium text-muted">
-        <Lock className="h-4 w-4" /> Private Project — government / NDA
-      </span>
-    );
-  }
-  const { appStore, playStore, drive, github } = project.links;
-  const hasAny = appStore || playStore || drive || github;
-  if (!hasAny) return null;
-
-  const linkClass =
-    "inline-flex items-center gap-2 rounded-full border border-border-strong bg-card px-4 py-2.5 text-sm font-medium transition-colors hover:border-primary/50 hover:text-primary";
-
+function SideLabel({ index, children }: { index: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-wrap gap-3">
-      {appStore && (
-        <a href={appStore} target="_blank" rel="noopener noreferrer" className={linkClass}>
-          <Apple className="h-4 w-4" /> App Store
-          <ArrowUpRight className="h-3.5 w-3.5 text-muted" />
-        </a>
-      )}
-      {playStore && (
-        <a href={playStore} target="_blank" rel="noopener noreferrer" className={linkClass}>
-          <Play className="h-4 w-4" /> Google Play
-          <ArrowUpRight className="h-3.5 w-3.5 text-muted" />
-        </a>
-      )}
-      {drive && (
-        <a href={drive} target="_blank" rel="noopener noreferrer" className={linkClass}>
-          <Download className="h-4 w-4" /> Download APK
-          <ArrowUpRight className="h-3.5 w-3.5 text-muted" />
-        </a>
-      )}
-    </div>
+    <Reveal>
+      <Eyebrow index={index}>{children}</Eyebrow>
+    </Reveal>
   );
 }
 
@@ -108,30 +65,32 @@ export default async function ProjectPage({
   const project = getProject(slug);
   if (!project) notFound();
 
-  const { prev, next } = getAdjacentProjects(slug);
-  const second = Math.min(2, project.imageCount);
-  const coverMain = project.cover ?? `/screens/${project.slug}/1.jpg`;
-  const coverSecondary = project.coverAlt ?? `/screens/${project.slug}/${second}.jpg`;
+  const { next } = getAdjacentProjects(slug);
+  const ratio = shotRatio(project);
+  const showcase = Array.from(
+    { length: Math.min(4, project.imageCount) },
+    (_, i) => `/screens/${project.slug}/${i + 1}.jpg`,
+  );
 
   const facts = [
     { label: "Category", value: project.category },
     { label: "Platform", value: platformLabel(project.platform) },
-    { label: "My Role", value: "Flutter Developer" },
-    { label: "Tech", value: `${project.stack.length} technologies` },
+    { label: "Role", value: "Flutter Developer" },
+    { label: "Availability", value: isOnStore(project) ? "Live on the stores" : "Android APK" },
   ];
 
   return (
     <>
       {/* Hero */}
       <section
-        className="relative overflow-hidden pb-12 pt-28 sm:pt-36"
+        className="relative overflow-hidden pb-16 pt-28 sm:pt-36"
         aria-label={`${project.name} overview`}
       >
-        <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="bg-grid absolute inset-0 opacity-50 [mask-image:radial-gradient(100%_70%_at_50%_0%,#000,transparent_75%)]" />
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(90%_60%_at_50%_0%,#000,transparent_75%)]" />
           <div
-            className="absolute left-1/2 top-[-10%] h-[30rem] w-[30rem] -translate-x-1/2 rounded-full blur-[120px]"
-            style={{ background: `${project.accent}22` }}
+            className="absolute left-1/2 top-[-15%] h-[36rem] w-[60rem] -translate-x-1/2 rounded-full blur-[140px]"
+            style={{ background: `${project.accent}40` }}
           />
         </div>
 
@@ -139,99 +98,98 @@ export default async function ProjectPage({
           <Reveal>
             <Link
               href="/#projects"
-              className="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-foreground"
+              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.16em] text-muted transition-colors hover:text-foreground"
             >
-              <ArrowLeft className="h-4 w-4" /> All projects
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border-strong transition-transform duration-300 group-hover:-translate-x-0.5">
+                <ArrowLeft className="h-3.5 w-3.5" />
+              </span>
+              All projects
             </Link>
           </Reveal>
 
-          <div className="mt-8 grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="flex flex-col gap-5">
+          <div className="mt-10 grid gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:items-end">
+            <div>
               <Reveal>
                 <div className="flex flex-wrap items-center gap-2">
                   <span
-                    className="rounded-full px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-wide text-white"
+                    className="rounded-full px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-white"
                     style={{ background: project.accent }}
                   >
                     {project.category}
                   </span>
-                  <span className="rounded-full border border-border-strong bg-card px-3 py-1 font-mono text-[11px] uppercase tracking-wide text-muted">
+                  <span className="rounded-full border border-border-strong px-3 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-muted">
                     {platformLabel(project.platform)}
                   </span>
-                  {project.needsContentReview && (
-                    <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 font-mono text-[11px] uppercase tracking-wide text-amber-500">
-                      <AlertTriangle className="h-3 w-3" /> Draft content
+                  {isOnStore(project) && (
+                    <span className="rounded-full bg-lime px-3 py-1 font-mono text-[11px] uppercase tracking-[0.12em] text-on-lime">
+                      Live
                     </span>
                   )}
                 </div>
               </Reveal>
-              <Reveal delay={0.05}>
-                <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
+              {project.nativeName && (
+                <Reveal delay={0.04}>
+                  <p lang="ar" dir="rtl" className="mt-8 w-fit font-arabic text-2xl font-bold text-muted">
+                    {project.nativeName}
+                  </p>
+                </Reveal>
+              )}
+              <Reveal delay={0.06}>
+                <h1 className="mt-3 text-[clamp(3rem,9vw,8rem)] font-semibold leading-[0.9] tracking-[-0.055em]">
                   {project.name}
                 </h1>
               </Reveal>
+            </div>
+            <div className="flex flex-col gap-6">
               <Reveal delay={0.1}>
-                <p className="max-w-xl text-pretty text-lg leading-relaxed text-muted">
-                  {project.tagline}
-                </p>
+                <p className="text-pretty text-lg leading-relaxed text-muted">{project.tagline}</p>
               </Reveal>
-              <Reveal delay={0.15}>
+              <Reveal delay={0.14}>
                 <StoreLinks project={project} />
               </Reveal>
             </div>
+          </div>
 
-            <Reveal delay={0.1}>
-              <div
-                className="relative overflow-hidden rounded-3xl border border-border p-8 sm:p-10"
-                style={{
-                  background: `radial-gradient(120% 100% at 50% 0%, ${project.accent}1f, var(--card) 70%)`,
-                }}
-              >
-                <div className="bg-dot pointer-events-none absolute inset-0 opacity-40" />
-                {project.storeShots ? (
-                  <div className="relative mx-auto w-[80%] max-w-[260px]">
+          {/* Showcase strip */}
+          <Reveal delay={0.12}>
+            <div
+              className="relative mt-14 overflow-hidden rounded-[2rem] border border-border-strong"
+              style={{
+                background: `radial-gradient(100% 120% at 50% 0%, ${project.accent}33, var(--card) 70%)`,
+              }}
+            >
+              <div aria-hidden className="bg-dot absolute inset-0 opacity-60" />
+              <div className="no-scrollbar relative flex snap-x snap-mandatory gap-4 overflow-x-auto p-6 sm:gap-6 lg:justify-center sm:p-12">
+                {showcase.map((src, i) => (
+                  <div
+                    key={src}
+                    className={
+                      "w-[62%] shrink-0 snap-center sm:w-[13rem] lg:w-[15rem] " +
+                      (i % 2 === 1 ? "sm:translate-y-8" : "")
+                    }
+                  >
                     <PhoneFrame
-                      src={coverMain}
-                      alt={`${project.name} app preview`}
-                      store
-                      priority
-                      sizes="260px"
+                      src={src}
+                      alt={`${project.name} screen ${i + 1}`}
+                      ratio={ratio}
+                      priority={i < 2}
+                      sizes="(max-width: 640px) 62vw, 240px"
                     />
                   </div>
-                ) : (
-                  <div className="relative mx-auto flex max-w-xs items-center justify-center">
-                    <div className="w-[42%] translate-y-4 -rotate-6">
-                      <PhoneFrame
-                        src={coverSecondary}
-                        alt={`${project.name} secondary screen`}
-                        sizes="160px"
-                      />
-                    </div>
-                    <div className="-ml-6 w-[50%] rotate-3">
-                      <PhoneFrame
-                        src={coverMain}
-                        alt={`${project.name} main screen`}
-                        priority
-                        sizes="200px"
-                      />
-                    </div>
-                  </div>
-                )}
+                ))}
               </div>
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
 
           {/* Quick facts */}
           <Reveal delay={0.1}>
-            <dl className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border lg:grid-cols-4">
+            <dl className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border lg:grid-cols-4">
               {facts.map((f) => (
                 <div key={f.label} className="bg-card px-5 py-5">
-                  <dt className="font-mono text-[11px] uppercase tracking-wider text-muted">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted">
                     {f.label}
                   </dt>
-                  <dd className="mt-1.5 text-sm font-semibold text-foreground">
-                    {f.value}
-                  </dd>
+                  <dd className="mt-1.5 font-semibold tracking-tight">{f.value}</dd>
                 </div>
               ))}
             </dl>
@@ -240,16 +198,12 @@ export default async function ProjectPage({
       </section>
 
       {/* Overview */}
-      <Section className="pt-8" ariaLabel="Project overview">
+      <Section className="py-16 sm:py-20" ariaLabel="Project overview">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[0.35fr_0.65fr]">
-            <Reveal>
-              <h2 className="text-sm font-mono uppercase tracking-[0.2em] text-primary">
-                Overview
-              </h2>
-            </Reveal>
+          <div className="grid gap-8 lg:grid-cols-[0.3fr_1fr] lg:gap-16">
+            <SideLabel index="01">Overview</SideLabel>
             <Reveal delay={0.05}>
-              <p className="text-pretty text-lg leading-relaxed text-foreground/90">
+              <p className="text-pretty text-[clamp(1.35rem,2.4vw,2rem)] font-medium leading-[1.3] tracking-[-0.02em]">
                 {project.overview}
               </p>
             </Reveal>
@@ -258,155 +212,133 @@ export default async function ProjectPage({
       </Section>
 
       {/* Problem & Solution */}
-      <Section className="py-12" ariaLabel="Problem and solution">
+      <Section className="py-16 sm:py-20" ariaLabel="Problem and solution">
         <Container>
-          <div className="grid gap-5 md:grid-cols-2">
-            <Reveal>
-              <div className="h-full rounded-3xl border border-border bg-card p-7">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-background-secondary text-amber-500">
-                  <Target className="h-5 w-5" />
-                </span>
-                <h3 className="mt-5 text-xl font-semibold">The Problem</h3>
-                <p className="mt-3 leading-relaxed text-muted">{project.problem}</p>
-              </div>
-            </Reveal>
-            <Reveal delay={0.06}>
-              <div className="h-full rounded-3xl border border-border bg-card p-7">
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-background-secondary text-primary">
-                  <Lightbulb className="h-5 w-5" />
-                </span>
-                <h3 className="mt-5 text-xl font-semibold">The Solution</h3>
-                <p className="mt-3 leading-relaxed text-muted">{project.solution}</p>
-              </div>
-            </Reveal>
+          <div className="grid gap-8 lg:grid-cols-[0.3fr_1fr] lg:gap-16">
+            <SideLabel index="02">Challenge</SideLabel>
+            <div className="grid gap-4 md:grid-cols-2">
+              <Reveal>
+                <div className="h-full rounded-[1.75rem] border border-border-strong bg-card p-7 sm:p-8">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted">
+                    The problem
+                  </span>
+                  <p className="mt-4 text-pretty leading-relaxed text-foreground/85">{project.problem}</p>
+                </div>
+              </Reveal>
+              <Reveal delay={0.06}>
+                <div
+                  className="h-full rounded-[1.75rem] border border-border-strong p-7 sm:p-8"
+                  style={{ background: `linear-gradient(160deg, ${project.accent}22, var(--card) 70%)` }}
+                >
+                  <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-primary">
+                    The solution
+                  </span>
+                  <p className="mt-4 text-pretty leading-relaxed text-foreground/85">{project.solution}</p>
+                </div>
+              </Reveal>
+            </div>
           </div>
         </Container>
       </Section>
 
-      {/* Role + Features */}
-      <Section className="py-12" ariaLabel="Role and features">
+      {/* Features */}
+      <Section className="py-16 sm:py-20" ariaLabel="Key features">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-2">
-            <Reveal>
-              <div>
-                <h3 className="flex items-center gap-2 text-xl font-semibold">
-                  <UserCog className="h-5 w-5 text-primary" /> My Role
-                </h3>
-                <p className="mt-4 leading-relaxed text-muted">{project.role}</p>
+          <div className="grid gap-8 lg:grid-cols-[0.3fr_1fr] lg:gap-16">
+            <SideLabel index="03">Features</SideLabel>
+            <ul className="grid gap-px overflow-hidden rounded-[1.75rem] border border-border bg-border sm:grid-cols-2">
+              {project.features.map((f, i) => (
+                <li key={f} className="flex gap-4 bg-card p-6">
+                  <span className="font-mono text-xs text-primary">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="text-pretty leading-relaxed text-foreground/90">{f}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Container>
+      </Section>
 
-                <h3 className="mt-10 flex items-center gap-2 text-xl font-semibold">
-                  <Layers className="h-5 w-5 text-primary" /> Technical Stack
-                </h3>
-                <div className="mt-4 flex flex-wrap gap-2">
+      {/* Role & stack */}
+      <Section className="py-16 sm:py-20" ariaLabel="Role and stack">
+        <Container>
+          <div className="grid gap-8 lg:grid-cols-[0.3fr_1fr] lg:gap-16">
+            <SideLabel index="04">Role &amp; stack</SideLabel>
+            <div className="grid gap-10 md:grid-cols-2">
+              <Reveal>
+                <p className="text-pretty text-lg leading-relaxed text-foreground/85">{project.role}</p>
+              </Reveal>
+              <Reveal delay={0.06}>
+                <div className="flex flex-wrap gap-2">
                   {project.stack.map((t) => (
                     <span
                       key={t}
-                      className="rounded-lg border border-border bg-card px-3 py-1.5 font-mono text-xs text-foreground/80"
+                      className="rounded-full border border-border-strong bg-card px-3.5 py-1.5 text-sm text-foreground/85"
                     >
                       {t}
                     </span>
                   ))}
                 </div>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.06}>
-              <div>
-                <h3 className="flex items-center gap-2 text-xl font-semibold">
-                  <Check className="h-5 w-5 text-primary" /> Key Features
-                </h3>
-                <ul className="mt-4 grid gap-3">
-                  {project.features.map((f) => (
-                    <li
-                      key={f}
-                      className="flex items-start gap-3 rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground/90"
-                    >
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
           </div>
         </Container>
       </Section>
 
-      {/* Engineering decisions */}
-      <Section className="py-12" ariaLabel="Engineering decisions">
+      {/* Engineering decisions + challenges */}
+      <Section className="py-16 sm:py-20" ariaLabel="Engineering decisions">
         <Container>
-          <Reveal>
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              Engineering <span className="text-gradient">decisions</span>
-            </h2>
-          </Reveal>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {project.decisions.map((d, i) => (
-              <Reveal key={i} delay={i * 0.05}>
-                <div className="flex h-full gap-3 rounded-2xl border border-border bg-card p-5">
-                  <span className="font-mono text-sm font-bold text-primary">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <p className="text-sm leading-relaxed text-muted">{d}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </Container>
-      </Section>
+          <div className="grid gap-8 lg:grid-cols-[0.3fr_1fr] lg:gap-16">
+            <SideLabel index="05">Engineering</SideLabel>
+            <div className="flex flex-col gap-12">
+              <ol className="flex flex-col border-t border-border">
+                {project.decisions.map((d, i) => (
+                  <li key={i} className="grid grid-cols-[2.5rem_1fr] gap-4 border-b border-border py-6">
+                    <span className="font-mono text-sm text-primary">{String(i + 1).padStart(2, "0")}</span>
+                    <Reveal>
+                      <p className="text-pretty text-lg leading-relaxed text-foreground/85">{d}</p>
+                    </Reveal>
+                  </li>
+                ))}
+              </ol>
 
-      {/* Challenges & solutions */}
-      <Section className="py-12" ariaLabel="Challenges and solutions">
-        <Container>
-          <Reveal>
-            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              Challenges &amp; <span className="text-gradient">solutions</span>
-            </h2>
-          </Reveal>
-          <div className="mt-8 flex flex-col gap-4">
-            {project.challenges.map((c, i) => (
-              <Reveal key={i} delay={i * 0.05}>
-                <div className="grid gap-5 rounded-3xl border border-border bg-card p-6 sm:p-7 md:grid-cols-2">
-                  <div className="md:border-r md:border-border md:pr-6">
-                    <span className="font-mono text-[11px] uppercase tracking-wider text-amber-500">
-                      Challenge
-                    </span>
-                    <p className="mt-2 leading-relaxed text-foreground/90">
-                      {c.challenge}
-                    </p>
-                  </div>
-                  <div>
-                    <span className="font-mono text-[11px] uppercase tracking-wider text-primary">
-                      Solution
-                    </span>
-                    <p className="mt-2 leading-relaxed text-muted">{c.solution}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
+              <div className="grid gap-4">
+                {project.challenges.map((c, i) => (
+                  <Reveal key={i} delay={i * 0.05}>
+                    <div className="grid gap-6 rounded-[1.75rem] border border-border-strong bg-card p-7 sm:p-8 md:grid-cols-2">
+                      <div>
+                        <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted">
+                          Challenge
+                        </span>
+                        <p className="mt-3 text-pretty leading-relaxed text-foreground/90">{c.challenge}</p>
+                      </div>
+                      <div className="md:border-l md:border-border md:pl-6">
+                        <span className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-primary">
+                          <Check className="h-3.5 w-3.5" /> Solution
+                        </span>
+                        <p className="mt-3 text-pretty leading-relaxed text-muted">{c.solution}</p>
+                      </div>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
           </div>
         </Container>
       </Section>
 
       {/* Gallery */}
-      <Section className="py-12" ariaLabel="Screenshot gallery">
+      <Section className="py-16 sm:py-20" ariaLabel="Screenshot gallery">
         <Container>
-          <Reveal>
-            <div className="flex items-end justify-between gap-4">
-              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
-                Screenshot <span className="text-gradient">gallery</span>
-              </h2>
-              <span className="font-mono text-xs text-muted">
-                Tap any image to enlarge
-              </span>
-            </div>
-          </Reveal>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <SideLabel index="06">Gallery</SideLabel>
+            <span className="font-mono text-xs text-muted">Tap any screen to enlarge</span>
+          </div>
           <div className="mt-8">
             <ProjectGallery
               slug={project.slug}
               imageCount={project.imageCount}
               groups={project.screenshotGroups}
-              store={project.storeShots}
+              ratio={ratio}
               name={project.name}
               accent={project.accent}
             />
@@ -414,37 +346,42 @@ export default async function ProjectPage({
         </Container>
       </Section>
 
-      {/* Prev / Next */}
-      <Section className="py-12" ariaLabel="Project navigation">
-        <Container>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Link
-              href={`/projects/${prev.slug}`}
-              className="group flex flex-col gap-2 rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/40"
-            >
-              <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-muted">
-                <ArrowLeft className="h-3.5 w-3.5" /> Previous
+      {/* Next project */}
+      <section aria-label="Next project" className="border-t border-border">
+        <Link
+          href={`/projects/${next.slug}`}
+          data-cursor-label="Next"
+          className="group relative block overflow-hidden"
+        >
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+            style={{ background: `radial-gradient(80% 120% at 50% 100%, ${next.accent}33, transparent 70%)` }}
+          />
+          <Container className="relative flex items-center justify-between gap-8 py-16 sm:py-24">
+            <div className="min-w-0">
+              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+                Next project
               </span>
-              <span className="text-lg font-semibold transition-colors group-hover:text-primary">
-                {prev.name}
-              </span>
-              <span className="text-sm text-muted">{prev.category}</span>
-            </Link>
-            <Link
-              href={`/projects/${next.slug}`}
-              className="group flex flex-col items-end gap-2 rounded-2xl border border-border bg-card p-6 text-right transition-colors hover:border-primary/40"
-            >
-              <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-muted">
-                Next <ArrowRight className="h-3.5 w-3.5" />
-              </span>
-              <span className="text-lg font-semibold transition-colors group-hover:text-primary">
+              <p className="mt-4 truncate text-[clamp(2.6rem,8vw,7rem)] font-semibold leading-[0.95] tracking-[-0.05em] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-3">
                 {next.name}
+              </p>
+              <p className="mt-3 text-muted">{next.category}</p>
+            </div>
+            <div className="relative hidden w-36 shrink-0 rotate-6 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:rotate-0 group-hover:scale-105 sm:block lg:w-44">
+              <div
+                className="relative overflow-hidden rounded-2xl border border-border-strong"
+                style={{ aspectRatio: String(shotRatio(next)) }}
+              >
+                <Image src={coverOf(next)} alt="" fill sizes="176px" className="object-cover" />
+              </div>
+              <span className="absolute -left-5 top-1/2 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-lime text-on-lime">
+                <ArrowUpRight className="h-5 w-5" />
               </span>
-              <span className="text-sm text-muted">{next.category}</span>
-            </Link>
-          </div>
-        </Container>
-      </Section>
+            </div>
+          </Container>
+        </Link>
+      </section>
 
       <ContactCTA />
     </>

@@ -1,32 +1,28 @@
 import { Hero } from "@/components/sections/Hero";
+import { MarqueeBand } from "@/components/sections/MarqueeBand";
 import { Manifesto } from "@/components/sections/Manifesto";
-import { About } from "@/components/sections/About";
-import { Specialization } from "@/components/sections/Specialization";
-import { Stats } from "@/components/sections/Stats";
 import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
 import { AllProjects } from "@/components/sections/AllProjects";
-import { Skills } from "@/components/sections/Skills";
-import { TechStack } from "@/components/sections/TechStack";
-import { Process } from "@/components/sections/Process";
-import { Experience } from "@/components/sections/Experience";
+import { About } from "@/components/sections/About";
 import { Services } from "@/components/sections/Services";
+import { Skills } from "@/components/sections/Skills";
+import { Process } from "@/components/sections/Process";
+import { CVSection } from "@/components/sections/CVSection";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 
 export default function Home() {
   return (
     <>
       <Hero />
+      <MarqueeBand />
       <Manifesto />
-      <About />
-      <Specialization />
-      <Stats />
       <FeaturedProjects />
       <AllProjects />
-      <Skills />
-      <TechStack />
-      <Process />
-      <Experience />
+      <About />
       <Services />
+      <Skills />
+      <Process />
+      <CVSection />
       <ContactCTA />
     </>
   );

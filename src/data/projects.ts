@@ -327,6 +327,7 @@ export const projects: Project[] = [
   {
     slug: "naji-restaurant",
     name: "Naji Restaurant",
+    nativeName: "مطاعم ناجي الحربي",
     tagline: "Mobile ordering app for Naji Al-Harbi — authentic kebab, a heritage taste since 1951.",
     category: "Restaurant",
     platform: "both",

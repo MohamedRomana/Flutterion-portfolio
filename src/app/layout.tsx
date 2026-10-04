@@ -67,25 +67,12 @@ export const metadata: Metadata = {
     description:
       "High-performance Flutter apps for iOS & Android — real-time features, scalable architecture, and polished user experiences.",
     siteName: "Mohamed Romana",
-    images: [
-      {
-        url: "/logo.png",
-        width: 1672,
-        height: 941,
-        alt: "Mohamed Romana — Flutter Developer",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Mohamed Romana — Flutter Developer",
     description:
       "High-performance Flutter apps for iOS & Android — real-time features, scalable architecture, and polished user experiences.",
-    images: ["/logo.png"],
-  },
-  icons: {
-    icon: [{ url: "/logo-icon.png", type: "image/png" }],
-    apple: [{ url: "/logo-icon.png" }],
   },
   robots: { index: true, follow: true },
 };
@@ -103,13 +90,16 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+      className={`${geist.variable} ${geistMono.variable} ${instrument.variable} ${cairo.variable}`}
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body
-        className={`${geist.variable} ${geistMono.variable} ${instrument.variable} ${cairo.variable} antialiased`}
-      >
+      <body className="antialiased">
         <ThemeProvider>
           <Loader />
           <CustomCursor />

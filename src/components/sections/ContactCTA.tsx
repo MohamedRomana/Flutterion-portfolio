@@ -1,168 +1,103 @@
-import { Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
-import { Container, Section } from "@/components/ui/Section";
+import { ArrowUpRight, Mail, Phone } from "lucide-react";
+import { Container } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
-import { Button } from "@/components/ui/Button";
+import { Magnetic } from "@/components/ui/Magnetic";
+import { CopyEmail } from "@/components/ui/CopyEmail";
 import { GithubIcon, LinkedinIcon, WhatsappIcon } from "@/components/ui/BrandIcons";
 import { profile } from "@/data/profile";
 
 export function ContactCTA() {
-  // Same number used for calling (tel:) and WhatsApp (wa.me needs digits only).
+  // Same number for calling (tel:) and WhatsApp (wa.me needs digits only).
   const phoneDigits = profile.phone.replace(/[^\d]/g, "");
 
-  const contactMethods: {
-    icon: React.ComponentType<{ className?: string }>;
-    label: string;
-    value: string;
-    href?: string;
-    external?: boolean;
-    iconClass: string;
-  }[] = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: profile.email,
-      href: `mailto:${profile.email}`,
-      iconClass: "text-primary",
-    },
-    {
-      icon: Phone,
-      label: "Call",
-      value: profile.phone,
-      href: `tel:${profile.phone.replace(/\s/g, "")}`,
-      iconClass: "text-primary",
-    },
-    {
-      icon: WhatsappIcon,
-      label: "WhatsApp",
-      value: profile.phone,
-      href: `https://wa.me/${phoneDigits}`,
-      external: true,
-      iconClass: "text-[#25D366]",
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: profile.location,
-      iconClass: "text-primary",
-    },
+  const channels = [
+    { label: "WhatsApp", value: profile.phone, href: `https://wa.me/${phoneDigits}`, Icon: WhatsappIcon, external: true },
+    { label: "Call", value: profile.phone, href: `tel:+${phoneDigits}`, Icon: Phone, external: false },
+    { label: "LinkedIn", value: profile.linkedin, href: profile.linkedinUrl, Icon: LinkedinIcon, external: true },
+    { label: "GitHub", value: `@${profile.github}`, href: profile.githubUrl, Icon: GithubIcon, external: true },
   ];
 
   return (
-    <Section id="contact" ariaLabel="Contact">
+    <section
+      id="contact"
+      aria-label="Contact"
+      className="relative scroll-mt-20 overflow-hidden py-24 sm:py-36"
+    >
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="animate-aurora absolute left-1/2 top-1/3 h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-primary/25 blur-[150px]" />
+      </div>
+
       <Container>
         <Reveal>
-          <div className="glow-shadow relative overflow-hidden rounded-3xl border border-border bg-card px-6 py-14 sm:px-12 sm:py-20">
-            {/* Background flourish */}
-            <div className="pointer-events-none absolute inset-0" aria-hidden>
-              <div className="bg-grid absolute inset-0 opacity-50 [mask-image:radial-gradient(80%_80%_at_50%_0%,#000,transparent_75%)]" />
-              <div className="absolute left-1/2 top-[-30%] h-80 w-80 -translate-x-1/2 rounded-full bg-primary/20 blur-[100px]" />
-            </div>
+          <p className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lime opacity-70" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-lime" />
+            </span>
+            Open to freelance &amp; full-time roles
+          </p>
+        </Reveal>
 
-            <div className="relative mx-auto flex max-w-2xl flex-col items-center text-center">
-              <span className="inline-flex items-center gap-2 rounded-full border border-border-strong bg-background-secondary px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-primary">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden />
-                Let&apos;s talk
+        <Reveal delay={0.05}>
+          <h2 className="mt-8 text-[clamp(3.2rem,11vw,10.5rem)] font-semibold leading-[0.88] tracking-[-0.06em]">
+            Let&apos;s build
+            <br />
+            <span className="serif text-primary">something</span> great.
+          </h2>
+        </Reveal>
+
+        <div className="mt-14 flex flex-col gap-10 border-t border-border pt-10 lg:flex-row lg:items-end lg:justify-between">
+          <Reveal delay={0.1}>
+            <a
+              href={`mailto:${profile.email}`}
+              className="group inline-flex flex-wrap items-center gap-x-4 gap-y-2 text-[clamp(1.35rem,3.4vw,2.6rem)] font-medium tracking-[-0.03em]"
+            >
+              <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_2px] bg-left-bottom bg-no-repeat pb-1 transition-[background-size] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-[length:100%_2px]">
+                {profile.email}
               </span>
-              <h2 className="mt-6 text-balance text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-                Have a Flutter project <span className="text-gradient">in mind?</span>
-              </h2>
-              <p className="mt-5 max-w-xl text-pretty leading-relaxed text-muted">
-                I&apos;m always open to building scalable, high-performance mobile
-                apps. Tell me about your idea and let&apos;s make it move.
-              </p>
-
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-                <Button href={`mailto:${profile.email}`} external size="lg" magnetic>
-                  <Mail className="h-4 w-4" />
-                  Send me an email
-                </Button>
-                <Button
-                  href={profile.githubUrl}
-                  external
-                  size="lg"
-                  variant="secondary"
-                  magnetic
-                >
-                  <GithubIcon className="h-4 w-4" />
-                  GitHub
-                </Button>
-              </div>
-
-              {/* Contact methods */}
-              <div className="mt-12 grid w-full gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                {contactMethods.map((m) => {
-                  const content = (
-                    <div className="flex h-full flex-col items-center gap-1.5 rounded-2xl border border-border bg-background-secondary px-4 py-5 transition-colors duration-200 hover:border-primary/40">
-                      <m.icon className={`h-5 w-5 ${m.iconClass}`} />
-                      <span className="font-mono text-[11px] uppercase tracking-wider text-muted">
-                        {m.label}
-                      </span>
-                      <span className="break-all text-sm font-medium text-foreground">
-                        {m.value}
-                      </span>
-                    </div>
-                  );
-                  return m.href ? (
-                    <a
-                      key={m.label}
-                      href={m.href}
-                      className="block"
-                      {...(m.external
-                        ? { target: "_blank", rel: "noopener noreferrer" }
-                        : {})}
-                    >
-                      {content}
-                    </a>
-                  ) : (
-                    <div key={m.label}>{content}</div>
-                  );
-                })}
-              </div>
-
-              <div className="mt-8 flex items-center gap-3">
-                <a
-                  href={`https://wa.me/${phoneDigits}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="WhatsApp"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong bg-background-secondary text-muted transition-colors hover:border-[#25D366]/60 hover:text-[#25D366]"
-                >
-                  <WhatsappIcon className="h-[18px] w-[18px]" />
-                </a>
-                <a
-                  href={profile.linkedinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong bg-background-secondary text-muted transition-colors hover:border-primary/50 hover:text-primary"
-                >
-                  <LinkedinIcon className="h-[18px] w-[18px]" />
-                </a>
-                <a
-                  href={profile.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong bg-background-secondary text-muted transition-colors hover:border-primary/50 hover:text-primary"
-                >
-                  <GithubIcon className="h-[18px] w-[18px]" />
-                </a>
+              <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-foreground text-background transition-transform duration-500 group-hover:rotate-45">
+                <ArrowUpRight className="h-5 w-5" />
+              </span>
+            </a>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <Magnetic className="inline-block">
                 <a
                   href={`mailto:${profile.email}`}
-                  aria-label="Email"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong bg-background-secondary text-muted transition-colors hover:border-primary/50 hover:text-primary"
+                  className="inline-flex h-11 items-center gap-2 rounded-full bg-lime px-5 text-sm font-medium text-on-lime"
                 >
-                  <Mail className="h-[18px] w-[18px]" />
+                  <Mail className="h-4 w-4" /> Send an email
                 </a>
-              </div>
-              <p className="mt-6 inline-flex items-center gap-1 font-mono text-xs text-muted">
-                Usually replies within a day
-                <ArrowUpRight className="h-3.5 w-3.5 text-primary" />
-              </p>
+              </Magnetic>
+              <CopyEmail email={profile.email} />
             </div>
-          </div>
-        </Reveal>
+          </Reveal>
+
+          <Reveal delay={0.15}>
+            <ul className="grid gap-2 sm:grid-cols-2 lg:w-[34rem]">
+              {channels.map(({ label, value, href, Icon, external }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="group flex items-center gap-3 rounded-2xl border border-border-strong bg-card/60 p-4 backdrop-blur transition-colors hover:border-foreground/40"
+                  >
+                    <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-background text-foreground">
+                      <Icon className="h-[18px] w-[18px]" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-muted">
+                        {label}
+                      </span>
+                      <span className="block truncate text-sm font-medium">{value}</span>
+                    </span>
+                    <ArrowUpRight className="h-4 w-4 shrink-0 text-muted transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
       </Container>
-    </Section>
+    </section>
   );
 }
