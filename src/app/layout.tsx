@@ -1,36 +1,53 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Instrument_Serif, Cairo } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider, themeInitScript } from "@/components/providers/ThemeProvider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
-import { ScrollTrail } from "@/components/ui/ScrollTrail";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { Loader } from "@/components/ui/Loader";
+import { profile } from "@/data/profile";
 
-const inter = Inter({
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-geist",
   display: "swap",
 });
 
-const jetbrains = JetBrains_Mono({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-mono-code",
+  variable: "--font-geist-mono",
   display: "swap",
 });
 
-const SITE_URL = "https://flutterion-portfolio.vercel.app";
+const instrument = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument",
+  display: "swap",
+});
+
+// Arabic app names only — not preloaded so it never blocks first paint.
+const cairo = Cairo({
+  subsets: ["arabic"],
+  weight: ["500", "700"],
+  variable: "--font-cairo",
+  display: "swap",
+  preload: false,
+});
+
+const SITE_URL = profile.siteUrl;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Mohamed Romana | Flutter Developer Portfolio",
+    default: "Mohamed Romana — Flutter Developer",
     template: "%s | Mohamed Romana",
   },
   description:
-    "Mohamed Romana is a Flutter developer portfolio showcasing high-performance mobile applications, real-time features, scalable architecture, and polished user experiences.",
+    "Mohamed Romana is a Flutter developer building high-performance iOS & Android apps — real-time features, scalable BLoC architecture, and polished, Arabic-ready user experiences.",
   keywords: [
     "Flutter Developer",
     "Mobile App Developer",
@@ -39,30 +56,31 @@ export const metadata: Metadata = {
     "Flutter Portfolio",
     "Mohamed Romana",
     "iOS & Android Apps",
+    "Arabic RTL apps",
   ],
   authors: [{ name: "Mohamed Romana" }],
   creator: "Mohamed Romana",
   openGraph: {
     type: "website",
     url: SITE_URL,
-    title: "Mohamed Romana | Flutter Developer Portfolio",
+    title: "Mohamed Romana — Flutter Developer",
     description:
-      "High-performance Flutter mobile applications — real-time features, scalable architecture, and polished user experiences.",
+      "High-performance Flutter apps for iOS & Android — real-time features, scalable architecture, and polished user experiences.",
     siteName: "Mohamed Romana",
     images: [
       {
         url: "/logo.png",
-        width: 1280,
-        height: 720,
+        width: 1672,
+        height: 941,
         alt: "Mohamed Romana — Flutter Developer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mohamed Romana | Flutter Developer Portfolio",
+    title: "Mohamed Romana — Flutter Developer",
     description:
-      "High-performance Flutter mobile applications — real-time features, scalable architecture, and polished user experiences.",
+      "High-performance Flutter apps for iOS & Android — real-time features, scalable architecture, and polished user experiences.",
     images: ["/logo.png"],
   },
   icons: {
@@ -74,8 +92,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#050b16" },
-    { media: "(prefers-color-scheme: light)", color: "#f5faff" },
+    { media: "(prefers-color-scheme: dark)", color: "#08080a" },
+    { media: "(prefers-color-scheme: light)", color: "#f3f2ed" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -85,19 +103,21 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className={`${inter.variable} ${jetbrains.variable} antialiased`}>
+      <body
+        className={`${geist.variable} ${geistMono.variable} ${instrument.variable} ${cairo.variable} antialiased`}
+      >
         <ThemeProvider>
           <Loader />
           <CustomCursor />
           <ScrollProgress />
-          <ScrollTrail />
+          <div aria-hidden className="grain" />
           <a
             href="#main"
-            className="sr-only rounded-lg bg-primary px-4 py-2 text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100]"
+            className="sr-only rounded-full bg-lime px-4 py-2 text-on-lime focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[400]"
           >
             Skip to content
           </a>

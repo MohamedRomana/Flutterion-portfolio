@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mohamed Romana — Flutter Developer CV</title>
+<!--
+  Source of truth for /public/Mohamed-Romana-CV.pdf and /public/cv-preview.png.
+  After editing, regenerate both with:  node cv/build-cv.mjs
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=block" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 12mm 15mm 11mm 15mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: "Lato", "Segoe UI", Carlito, Arial, sans-serif;
+    font-size: 10.2pt;
+    line-height: 1.38;
+    color: #1a1a1a;
+    background: #fff;
+  }
+  .page { width: 180mm; margin: 0 auto; }
+  a { color: #1a56c4; text-decoration: underline; text-underline-offset: 1.5px; }
+  .ar { font-family: "Segoe UI", "Noto Naskh Arabic", Tahoma, sans-serif; direction: rtl; unicode-bidi: isolate; }
+
+  header { text-align: center; }
+  h1 {
+    font-size: 25pt;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    margin-right: -0.2em; /* compensate trailing letter-spacing */
+    line-height: 1.1;
+  }
+  .role { margin-top: 5px; font-size: 12.5pt; font-weight: 700; color: #3a3a3a; }
+  .role .sep { margin: 0 8px; font-weight: 400; }
+  .contact { margin-top: 6px; font-size: 10.6pt; line-height: 1.6; }
+  .dot { margin: 0 7px; }
+
+  h2 {
+    margin-top: 15px;
+    padding-bottom: 4px;
+    border-bottom: 1.6px solid #1a1a1a;
+    font-size: 12.5pt;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  h2 { break-after: avoid; }
+  .projects { break-before: page; }
+  .projects h2 { margin-top: 0; }
+  section > p { margin-top: 7px; }
+  section > p + p { margin-top: 6px; }
+
+  .skills { margin-top: 7px; list-style: none; }
+  .skills li { margin-top: 1.5px; }
+  .skills b { font-weight: 700; }
+
+  .entry { margin-top: 9px; break-inside: avoid; }
+  .entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .entry-title { font-weight: 700; font-size: 10.9pt; }
+  .entry-title .cat { font-weight: 700; }
+  .entry-right { font-weight: 700; color: #4a4a4a; white-space: nowrap; font-size: 10.2pt; }
+  .meta { font-style: italic; color: #555; }
+  .links { margin-top: 1px; }
+  ul.bullets { margin-top: 3px; padding-left: 20px; }
+  ul.bullets li { margin-top: 1.5px; padding-left: 2px; }
+  .intro { margin-top: 6px; font-style: italic; color: #555; }
+  .also { margin-top: 8px; }
+  @media screen { body { padding: 13mm 0; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>MOHAMED ROMANA</h1>
+    <div class="role">Flutter Developer<span class="sep">|</span>Mobile Application Developer (iOS &amp; Android)</div>
+    <div class="contact">
+      Mansoura, Egypt<span class="dot">•</span><a href="tel:+201030923964">+20 103 092 3964</a><span class="dot">•</span><a href="mailto:mohamedromana124@gmail.com">mohamedromana124@gmail.com</a><br>
+      Portfolio: <a href="https://flutterion-portfolio.vercel.app">flutterion-portfolio.vercel.app</a><br>
+      LinkedIn: <a href="https://www.linkedin.com/in/mohamed-romana-78a654295/">linkedin.com/in/mohamed-romana-78a654295</a><span class="dot">•</span>GitHub: <a href="https://github.com/MohamedRomana">github.com/MohamedRomana</a>
+    </div>
+  </header>
+
+  <section>
+    <h2>Professional Summary</h2>
+    <p>
+      Flutter Developer building and shipping production mobile applications with Dart and Flutter. Delivered
+      8 applications live on the App Store and Google Play across government / enterprise platforms, heritage
+      commerce, service marketplaces, multi-store e-commerce, delivery, restaurant ordering, and travel.
+    </p>
+    <p>
+      Work primarily with Bloc / Cubit state management and the MVVM pattern, following SOLID principles, clean
+      code, and reusable, modular design. Experienced in integrating RESTful APIs with Dio / HTTP, with structured
+      error handling and performance-minded, responsive UI.
+    </p>
+    <p>
+      Experienced in multi-role applications &mdash; including a five-role government workflow driven by a Finite State
+      Machine &mdash; real-time data synchronization and live tracking, Firebase push notifications and messaging,
+      Google Maps &amp; Geolocator, enterprise media uploads, and Arabic / English (RTL) interfaces.
+    </p>
+  </section>
+
+  <section>
+    <h2>Technical Skills</h2>
+    <ul class="skills">
+      <li><b>Languages &amp; Frameworks:</b> Dart, Flutter Framework, Advanced &amp; Responsive UI</li>
+      <li><b>Architecture &amp; Patterns:</b> MVVM, SOLID Principles, OOP, Clean Code, Reusable Code &amp; Modules</li>
+      <li><b>State Management:</b> Bloc, Cubit, Finite State Machine</li>
+      <li><b>Networking &amp; Data:</b> RESTful APIs, Dio, HTTP, Error Handling</li>
+      <li><b>Firebase:</b> Push Notifications, Firebase Cloud Messaging, Real-time Data Synchronization</li>
+      <li><b>Maps &amp; Location:</b> Google Maps API, Geolocator, Real-time Location &amp; Delivery Tracking</li>
+      <li><b>Media:</b> Document, Photo &amp; Video Uploads, Audio Playback</li>
+      <li><b>UI &amp; Localization:</b> flutter_screenutil, Responsive Design, Multi-Role UI, Arabic / English (RTL)</li>
+      <li><b>Tools:</b> Git, GitHub, Android Studio, VS Code, Xcode, Postman, Figma, Adobe XD</li>
+      <li><b>Core Strengths:</b> Problem Solving, Performance Optimization, Production Stability</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Work Experience</h2>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">Flutter Developer &mdash; Efadh For Web Solution</span>
+        <span class="entry-right">Dec 2024 &ndash; Present</span>
+      </div>
+      <div class="meta">Full-time &mdash; Mansoura, Egypt</div>
+      <ul class="bullets">
+        <li>Deliver production Flutter applications for iOS and Android &mdash; 8 of them live on the App Store and Google Play, including AdEC Request, Al Sadu Al Najdi, Almustarih, Alaswak, Makhdom, and Wasal.</li>
+        <li>Built a large-scale platform for the Roads General Authority (RGA, Saudi Arabia) with a Bloc + Finite State Machine request lifecycle across five user roles.</li>
+        <li>Build multi-role applications (clients / drivers / service centres, customers / providers) with distinct flows on a shared architecture.</li>
+        <li>Integrate RESTful APIs with Dio / HTTP and model every screen state explicitly with Bloc / Cubit.</li>
+        <li>Implement real-time features &mdash; live order and delivery tracking on Google Maps, in-app messaging, and Firebase push notifications.</li>
+        <li>Build responsive, Arabic-first RTL interfaces with ScreenUtil while keeping code clean, reusable, and SOLID.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">Mansoura University</span>
+        <span class="entry-right">2021 &ndash; 2025</span>
+      </div>
+      <div>Bachelor of Science, Computer Science</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Languages</h2>
+    <p>Arabic (Native)<span class="dot">•</span>English</p>
+  </section>
+
+
+  <section class="projects">
+    <h2>Selected Projects</h2>
+    <p class="intro">Applications live on the App Store and Google Play.</p>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">ADEC REQUEST &mdash; <span class="cat">Enterprise / GovTech (RGA, Saudi Arabia)</span></span>
+        <span class="entry-right">Efadh For Web Solution</span>
+      </div>
+      <div class="links">Live on <a href="https://apps.apple.com/us/app/adec-request/id6747982866">App Store</a> &amp; <a href="https://play.google.com/store/apps/details?id=com.app.adecrequest">Google Play</a><span class="dot">•</span>Case study: <a href="https://flutterion-portfolio.vercel.app/projects/adec-request">flutterion-portfolio.vercel.app/projects/adec-request</a></div>
+      <ul class="bullets">
+        <li>Developed a large-scale application connecting contractors, consultants, engineers, and administrative branches in one system for engineering requests and project inspections.</li>
+        <li>Implemented a multi-role workflow using Bloc and a Finite State Machine to manage complex request lifecycles across five user roles.</li>
+        <li>Built geolocation-based field inspections with Google Maps &amp; Geolocator and enterprise media uploads for documents, photos, and videos.</li>
+        <li>Integrated Firebase push notifications and real-time data synchronization between stakeholders at government-level integrity and performance.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">AL SADU AL NAJDI <span class="ar">(السدو النجدي)</span> &mdash; <span class="cat">Heritage Commerce</span></span>
+        <span class="entry-right">Efadh For Web Solution</span>
+      </div>
+      <div class="links">Live on <a href="https://apps.apple.com/app/%D8%A7%D9%84%D8%B3%D8%AF%D9%88-%D8%A7%D9%84%D9%86%D8%AC%D8%AF%D9%8A/id6791624461">App Store</a> &amp; <a href="https://play.google.com/store/apps/details?id=com.efadh.elsdoelnagdy">Google Play</a><span class="dot">•</span>Case study: <a href="https://flutterion-portfolio.vercel.app/projects/elsdo">flutterion-portfolio.vercel.app/projects/elsdo</a></div>
+      <ul class="bullets">
+        <li>Built an Arabic-first marketplace for authentic Najdi Sadu weaving, unifying training workshops, cultural activities, and a handcrafted-products store in one home hub.</li>
+        <li>Implemented workshop discovery and booking with location-aware listings and category filters.</li>
+        <li>Built a categorised store with rich product-detail pages, quantity selection, fast checkout, and order tracking.</li>
+        <li>Delivered account management and push notifications with Bloc, Dio, and Firebase Cloud Messaging.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">ALMUSTARIH &mdash; <span class="cat">Auto-Parts &amp; Car-Service Marketplace</span></span>
+        <span class="entry-right">Efadh For Web Solution</span>
+      </div>
+      <div class="links">Live on <a href="https://apps.apple.com/us/app/%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D8%B1%D9%8A%D8%AD/id6757157320">App Store</a> &amp; <a href="https://play.google.com/store/apps/details?id=com.efadh.almustarih">Google Play</a><span class="dot">•</span>Case study: <a href="https://flutterion-portfolio.vercel.app/projects/almustarih">flutterion-portfolio.vercel.app/projects/almustarih</a></div>
+      <ul class="bullets">
+        <li>Developed a marketplace connecting car owners, spare-parts vendors, and service workshops &mdash; browse and buy parts, schedule maintenance, and track deliveries.</li>
+        <li>Built a multi-role system for clients, delivery drivers, and service centres with Bloc state management and Dio networking.</li>
+        <li>Implemented real-time delivery tracking with Google Maps plus Firebase push notifications and in-app messaging.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">ALASWAK &mdash; <span class="cat">Multi-Store E-commerce</span></span>
+        <span class="entry-right">Efadh For Web Solution</span>
+      </div>
+      <div class="links">Live on <a href="https://apps.apple.com/us/app/%D8%A7%D9%84%D8%A3%D8%B3%D9%88%D8%A7%D9%82/id6747349206">App Store</a> &amp; <a href="https://play.google.com/store/apps/details?id=com.efadh.alaswak">Google Play</a><span class="dot">•</span>Case study: <a href="https://flutterion-portfolio.vercel.app/projects/alaswak">flutterion-portfolio.vercel.app/projects/alaswak</a></div>
+      <ul class="bullets">
+        <li>Brought electronics stores, restaurants, and cafés into one app with a shared catalogue and checkout flow.</li>
+        <li>Implemented smart product suggestions, a streamlined checkout, and real-time order tracking.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">MAKHDOM &mdash; <span class="cat">On-Demand Services</span></span>
+        <span class="entry-right">Efadh For Web Solution</span>
+      </div>
+      <div class="links">Live on <a href="https://apps.apple.com/us/app/%D9%85%D8%AE%D9%80%D8%AF%D9%88%D9%85-%D9%85%D9%83%D9%81%D9%8A/id6739352807">App Store</a> &amp; <a href="https://play.google.com/store/apps/details?id=com.efadh.makhdom">Google Play</a><span class="dot">•</span>Case study: <a href="https://flutterion-portfolio.vercel.app/projects/makhdom">flutterion-portfolio.vercel.app/projects/makhdom</a></div>
+      <ul class="bullets">
+        <li>Developed an app connecting customers with professional technicians for daily services.</li>
+        <li>Built quick service requests, provider matching, and seamless in-app interaction between customers and providers.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <span class="entry-title">WASAL <span class="ar">(واصل)</span> &mdash; <span class="cat">Delivery</span></span>
+        <span class="entry-right">Efadh For Web Solution</span>
+      </div>
+      <div class="links">Live on <a href="https://apps.apple.com/us/app/wasal-%D9%88%D8%A7%D8%B5%D9%84/id6754983789">App Store</a> &amp; <a href="https://play.google.com/store/apps/details?id=com.efadh.wasal">Google Play</a><span class="dot">•</span>Case study: <a href="https://flutterion-portfolio.vercel.app/projects/wasal">flutterion-portfolio.vercel.app/projects/wasal</a></div>
+      <ul class="bullets">
+        <li>Built a lightweight delivery app connecting customers with couriers for meals and store items.</li>
+        <li>Implemented full authentication and real-time order tracking through to doorstep delivery.</li>
+      </ul>
+    </div>
+
+    <p class="also">
+      <b>Also shipped &mdash;</b>
+      Naji Restaurant, heritage kebab ordering app (<a href="https://apps.apple.com/us/app/%D9%85%D8%B7%D8%A7%D8%B9%D9%85-%D9%86%D8%A7%D8%AC%D9%8A-%D8%A7%D9%84%D8%AD%D8%B1%D8%A8%D9%8A-%D9%84%D9%84%D9%83%D8%A8%D8%A7%D8%A8/id6447362219">App Store</a> &amp; <a href="https://play.google.com/store/apps/details?id=com.efada.kababNagy">Google Play</a>)<span class="dot">•</span>Plan A, visa &amp; passport-renewal travel companion (<a href="https://play.google.com/store/apps/details?id=com.efadh.visa">Google Play</a>)
+    </p>
+  </section>
+
+</div>
+</body>
+</html>

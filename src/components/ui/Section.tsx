@@ -8,7 +8,7 @@ export function Container({
   children: React.ReactNode;
 }) {
   return (
-    <div className={cn("mx-auto w-full max-w-7xl px-5 sm:px-8", className)}>
+    <div className={cn("mx-auto w-full max-w-[84rem] px-5 sm:px-8 lg:px-10", className)}>
       {children}
     </div>
   );
@@ -29,7 +29,7 @@ export function Section({
     <section
       id={id}
       aria-label={ariaLabel}
-      className={cn("relative scroll-mt-24 py-20 sm:py-28", className)}
+      className={cn("relative scroll-mt-20 py-24 sm:py-32", className)}
     >
       {children}
     </section>

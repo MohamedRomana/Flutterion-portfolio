@@ -1,52 +1,46 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import type { Project } from "@/types";
+
+/** Default ratio of the store/marketing screenshots (9:16). */
+export const DEFAULT_SHOT_RATIO = 9 / 16;
+
+export function shotRatio(project: Pick<Project, "shotRatio">): number {
+  return project.shotRatio ?? DEFAULT_SHOT_RATIO;
+}
+
+export function coverOf(project: Pick<Project, "slug" | "cover">): string {
+  return project.cover ?? `/screens/${project.slug}/1.jpg`;
+}
 
 /**
- * Renders an app screenshot inside a clean phone bezel. Screenshots already
- * include their own status bar, so no fake notch is overlaid (avoids clashing
- * with the real iOS/Android chrome in the captures).
+ * Renders a pre-composed store screenshot (it already contains its own
+ * device frame and background) inside a soft rounded card at its native
+ * aspect ratio, so nothing gets cropped.
  */
 export function PhoneFrame({
   src,
   alt,
+  ratio = DEFAULT_SHOT_RATIO,
   priority = false,
   sizes = "(max-width: 768px) 60vw, 280px",
   className,
-  store = false,
 }: {
   src: string;
   alt: string;
+  /** width / height of the image. */
+  ratio?: number;
   priority?: boolean;
   sizes?: string;
   className?: string;
-  /** Store/marketing graphic that already includes its own frame (9:16). */
-  store?: boolean;
 }) {
-  if (store) {
-    return (
-      <div
-        className={cn(
-          "relative aspect-[9/16] w-full overflow-hidden rounded-3xl border border-border-strong bg-card shadow-[0_30px_60px_-22px_rgba(0,0,0,0.5)] ring-1 ring-white/5",
-          className,
-        )}
-      >
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          priority={priority}
-          sizes={sizes}
-          className="object-cover"
-        />
-      </div>
-    );
-  }
   return (
     <div
       className={cn(
-        "relative aspect-[9/19.5] w-full overflow-hidden rounded-[1.8rem] border-[5px] border-slate-800 bg-slate-950 shadow-[0_30px_60px_-22px_rgba(0,0,0,0.6)] ring-1 ring-white/5",
+        "relative w-full overflow-hidden rounded-[1.6rem] border border-border-strong bg-card shadow-[0_40px_80px_-30px_rgba(0,0,0,0.55)]",
         className,
       )}
+      style={{ aspectRatio: String(ratio) }}
     >
       <Image
         src={src}
@@ -54,7 +48,7 @@ export function PhoneFrame({
         fill
         priority={priority}
         sizes={sizes}
-        className="object-cover object-top"
+        className="object-cover"
       />
     </div>
   );

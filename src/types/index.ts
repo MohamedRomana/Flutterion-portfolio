@@ -19,7 +19,8 @@ export type ProjectCategory =
   | "Productivity"
   | "Islamic / Lifestyle"
   | "Health / Accessibility"
-  | "Restaurant";
+  | "Restaurant"
+  | "Heritage Commerce";
 
 export interface ProjectLinks {
   /** Placeholder values (e.g. "#") are intentional — replace with real URLs. */
@@ -78,6 +79,13 @@ export interface Project {
    * as-is — without the site's PhoneFrame bezel and at their native ratio.
    */
   storeShots?: boolean;
+  /**
+   * Width / height of the screenshots. Defaults to 9/16 (the standard
+   * store-graphic ratio); set it for taller captures such as 1242x2688.
+   */
+  shotRatio?: number;
+  /** Native-script name shown alongside the Latin name (e.g. Arabic). */
+  nativeName?: string;
   featured: boolean;
   /** Government / NDA work with no public links. */
   isPrivate: boolean;
@@ -147,6 +155,10 @@ export interface Profile {
   githubUrl: string;
   linkedin: string;
   linkedinUrl: string;
+  /** Canonical production URL of this site (no trailing slash). */
+  siteUrl: string;
+  /** Public path of the downloadable CV PDF. */
+  cvUrl: string;
   shortBio: string;
   longBio: string[];
 }

@@ -3,11 +3,9 @@ import type { Project } from "@/types";
 /* ------------------------------------------------------------------ */
 /*  PROJECTS — source of truth: mohamedromanaCV.pdf + app screenshots. */
 /*                                                                     */
-/*  Link policy (per owner): store buttons use "#" placeholders that   */
-/*  must be replaced with real URLs. AdEC is a government/NDA project   */
-/*  and is intentionally marked Private with no public links.          */
-/*  Any project with `needsContentReview: true` has copy NOT found in  */
-/*  the CV and must be confirmed by the owner.                         */
+/*  Order matters: apps live on the App Store / Google Play come first */
+/*  (they are the featured case studies), followed by apps distributed */
+/*  as APK builds.                                                     */
 /* ------------------------------------------------------------------ */
 
 export const projects: Project[] = [
@@ -76,8 +74,350 @@ export const projects: Project[] = [
   },
 
   {
+    slug: "elsdo",
+    name: "Al Sadu Al Najdi",
+    nativeName: "السدو النجدي",
+    tagline: "Heritage marketplace for authentic Najdi Sadu weaving — training workshops, cultural activities, and a handcrafted-products store.",
+    category: "Heritage Commerce",
+    platform: "both",
+    accent: "#9b1c2c",
+    imageCount: 4,
+    storeShots: true,
+    shotRatio: 1242 / 2688,
+    featured: true,
+    isPrivate: false,
+    links: {
+      appStore:
+        "https://apps.apple.com/app/%D8%A7%D9%84%D8%B3%D8%AF%D9%88-%D8%A7%D9%84%D9%86%D8%AC%D8%AF%D9%8A/id6791624461",
+      playStore: "https://play.google.com/store/apps/details?id=com.efadh.elsdoelnagdy",
+    },
+    overview:
+      "Al Sadu Al Najdi (السدو النجدي) is a heritage-commerce app dedicated to Sadu — the traditional Bedouin weaving craft of Najd, Saudi Arabia. It brings the craft's whole world into one place: training workshops led by skilled artisans, cultural activities, and a store of authentic handmade Sadu products — wrapped in a warm, Arabic-first interface that carries the identity of the craft itself.",
+    problem:
+      "Sadu artisans and enthusiasts had no single digital home. Workshops were announced informally, activities were hard to discover, and authentic handmade products were sold through scattered channels — with no simple way for a customer to browse, understand a product, order it, and follow that order.",
+    solution:
+      "I built a unified, Arabic-first experience around three pillars — Workshops, Activities, and the Store — reachable from one home hub. Users can browse and book training workshops filtered by location and craft type, explore heritage activities, shop categorised products with rich detail pages, choose quantities and check out quickly, then track orders, manage their account, and receive notifications.",
+    role:
+      "Flutter Developer — built the app end-to-end: the home hub, workshop discovery and booking flow, the categorised store and product-detail experience, cart and checkout, order tracking, account management, and notifications.",
+    features: [
+      "Home hub that unifies Workshops, Activities & the Store",
+      "Training workshops with location-aware listings and category filters",
+      "Workshop booking straight from the listing",
+      "Store with categories — heritage gifts, artworks, tools & materials",
+      "Product details with imagery, description, pricing & quantity picker",
+      "Fast “Buy now” checkout and order tracking",
+      "Account management and push notifications",
+      "Arabic-first RTL interface with a heritage-inspired visual identity",
+    ],
+    stack: [
+      "Flutter",
+      "Dart",
+      "BLoC",
+      "Dio",
+      "REST APIs",
+      "Firebase Messaging",
+      "ScreenUtil",
+    ],
+    decisions: [
+      "Organised the product around three clear pillars — Workshops, Activities, Store — so a niche, culture-first audience always knows where to go next.",
+      "Treated RTL Arabic as the primary layout rather than a translation, keeping typography, spacing, and navigation natural for Arabic readers.",
+      "Built the visual layer around the craft's own palette — deep Sadu maroon on warm cream — so the app feels like an extension of the heritage it sells.",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Serving two very different journeys — booking a hands-on workshop and buying a physical product — without the app feeling like two products glued together.",
+        solution:
+          "A single home hub with shared components (cards, filters, detail pages, and one order history) gives both journeys the same rhythm, so moving between learning and shopping feels seamless.",
+      },
+      {
+        challenge:
+          "Making handmade products — where texture and detail matter — feel trustworthy enough to buy from a phone screen.",
+        solution:
+          "Image-led product pages with clear categories, descriptions, pricing, and a frictionless quantity-and-checkout flow give buyers everything they need before they order.",
+      },
+    ],
+  },
+
+  {
+    slug: "almustarih",
+    name: "Almustarih",
+    nativeName: "المستريح",
+    tagline: "Auto-parts & car-service marketplace connecting owners, vendors, and workshops.",
+    category: "Service Marketplace",
+    platform: "both",
+    accent: "#22d3ee",
+    imageCount: 5,
+    storeShots: true,
+    featured: true,
+    isPrivate: false,
+    links: {
+      appStore:
+        "https://apps.apple.com/us/app/%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D8%B1%D9%8A%D8%AD/id6757157320",
+      playStore: "https://play.google.com/store/apps/details?id=com.efadh.almustarih",
+    },
+    overview:
+      "A comprehensive mobile application for the Almustarih platform — a service marketplace that connects car owners, spare-parts vendors, and service workshops. Customers browse and purchase auto parts, schedule car maintenance, and track deliveries in real time.",
+    problem:
+      "Car owners, spare-parts vendors, and workshops had no single channel to transact, communicate, and coordinate deliveries — making part sourcing and maintenance slow and fragmented.",
+    solution:
+      "I built a multi-role system that enables seamless communication between clients, delivery drivers, and service centres. State is managed with BLoC, APIs are handled with Dio, Firebase powers push notifications and messaging, and Google Maps provides live location tracking for deliveries.",
+    role:
+      "Flutter Developer — implemented the multi-role architecture, BLoC state layer, Dio networking, Firebase messaging/notifications, and Google Maps tracking.",
+    features: [
+      "Browse & purchase auto parts",
+      "Schedule car maintenance services",
+      "Real-time delivery tracking on Google Maps",
+      "Multi-role flows — clients, drivers & service centres",
+      "In-app messaging between parties",
+      "Firebase push notifications",
+    ],
+    stack: ["Flutter", "Dart", "BLoC", "Dio", "Firebase", "Google Maps API", "REST APIs"],
+    decisions: [
+      "Used BLoC to keep distinct client / driver / service-centre experiences cleanly separated yet consistent.",
+      "Centralised networking on Dio for interceptors, structured error handling, and predictable API calls.",
+      "Combined Firebase messaging with Google Maps so order updates and live tracking stay in sync.",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Keeping three different user types — clients, drivers, and service centres — in sync around a single order in real time.",
+        solution:
+          "A shared BLoC-driven data flow plus Firebase messaging kept every party's view of an order consistent as its status changed.",
+      },
+    ],
+  },
+
+  {
+    slug: "alaswak",
+    name: "Alaswak",
+    nativeName: "الأسواق",
+    tagline: "Multi-store commerce bringing electronics shops, restaurants, and cafés into one app.",
+    category: "E-commerce",
+    platform: "both",
+    accent: "#7c3aed",
+    imageCount: 4,
+    storeShots: true,
+    featured: true,
+    isPrivate: false,
+    links: {
+      appStore:
+        "https://apps.apple.com/us/app/%D8%A7%D9%84%D8%A3%D8%B3%D9%88%D8%A7%D9%82/id6747349206",
+      playStore: "https://play.google.com/store/apps/details?id=com.efadh.alaswak",
+    },
+    overview:
+      "Alaswak brings electronics stores, restaurants, and cafés together in one place, so customers can find what they want fast, order, and get it delivered to their door — a smooth shopping experience with smart suggestions, easy checkout, and real-time order tracking.",
+    problem:
+      "Shoppers had to juggle separate apps for electronics, food, and cafés, with inconsistent checkout and no unified way to track their orders.",
+    solution:
+      "I built a single, multi-store commerce experience with smart product suggestions, a streamlined checkout, and real-time order tracking — so every purchase feels simpler and quicker regardless of the store type.",
+    role:
+      "Flutter Developer — implemented the multi-store browsing experience, cart and checkout flows, and real-time order tracking.",
+    features: [
+      "Unified browsing across electronics, restaurants & cafés",
+      "Smart product suggestions",
+      "Streamlined, easy checkout",
+      "Real-time order tracking",
+      "Per-store catalogues and offers",
+    ],
+    stack: ["Flutter", "Dart", "BLoC", "REST APIs", "Firebase"],
+    decisions: [
+      "Designed a flexible catalogue model so different store types (retail vs. food) share one browsing and checkout flow.",
+      "Used a reactive state layer to reflect order status changes immediately in the UI.",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Unifying very different store types — electronics, restaurants, and cafés — under one consistent shopping and checkout experience.",
+        solution:
+          "A shared catalogue and checkout abstraction let each store type plug in while keeping the customer experience uniform.",
+      },
+    ],
+  },
+
+  {
+    slug: "makhdom",
+    name: "Makhdom",
+    tagline: "On-demand app connecting customers with professional technicians for daily services.",
+    category: "On-Demand Services",
+    platform: "both",
+    accent: "#0ea5e9",
+    imageCount: 6,
+    storeShots: true,
+    featured: true,
+    isPrivate: false,
+    links: {
+      appStore:
+        "https://apps.apple.com/us/app/%D9%85%D8%AE%D9%80%D8%AF%D9%88%D9%85-%D9%85%D9%83%D9%81%D9%8A/id6739352807",
+      playStore: "https://play.google.com/store/apps/details?id=com.efadh.makhdom",
+    },
+    overview:
+      "A mobile application that connects customers with professional technicians for a range of daily services, with quick service requests, provider matching, and seamless in-app interaction between users and providers.",
+    problem:
+      "Finding a trusted technician for everyday services was slow and informal, with no structured way to request help or communicate with providers.",
+    solution:
+      "I built quick service-request flows, a provider-matching experience, and in-app interaction so customers and technicians can connect and coordinate smoothly inside a single app.",
+    role:
+      "Flutter Developer — implemented the request flows, provider matching experience, and user/provider interaction screens.",
+    features: [
+      "Quick service requests",
+      "Customer ↔ provider matching",
+      "Seamless in-app interaction",
+      "Service categories for daily needs",
+    ],
+    stack: ["Flutter", "Dart", "BLoC", "REST APIs", "Firebase"],
+    decisions: [
+      "Kept the request flow short and guided to reduce friction for first-time users.",
+      "Separated customer and provider experiences while sharing core service logic.",
+    ],
+    challenges: [
+      {
+        challenge: "Matching customers to the right provider quickly and clearly.",
+        solution:
+          "A focused matching flow surfaces relevant providers and lets both sides interact in-app without leaving the experience.",
+      },
+    ],
+  },
+
+  {
+    slug: "wasal",
+    name: "Wasal",
+    nativeName: "واصل",
+    tagline: "Lightweight delivery app connecting customers with couriers for meals and store items.",
+    category: "Delivery",
+    platform: "both",
+    accent: "#22d3ee",
+    imageCount: 5,
+    storeShots: true,
+    featured: true,
+    isPrivate: false,
+    links: {
+      appStore: "https://apps.apple.com/us/app/wasal-%D9%88%D8%A7%D8%B5%D9%84/id6754983789",
+      playStore: "https://play.google.com/store/apps/details?id=com.efadh.wasal",
+    },
+    overview:
+      "Wasal is a lightweight delivery app — first built as a Flutter training project — that connects customers with couriers to order meals and store items quickly and without hassle. It includes real-time order tracking through to doorstep delivery and full authentication for a simple, secure experience.",
+    problem:
+      "Customers wanted a fast, no-friction way to order meals and store items and follow their delivery, without a heavy or complicated app.",
+    solution:
+      "I built a focused delivery flow with full authentication and real-time order tracking from checkout through to doorstep delivery, keeping the experience simple and secure.",
+    role:
+      "Flutter Developer — built the app end-to-end, including authentication and the real-time order-tracking flow.",
+    features: [
+      "Order meals & store items",
+      "Real-time order tracking to the doorstep",
+      "Full authentication",
+      "Simple, secure experience",
+    ],
+    stack: ["Flutter", "Dart", "BLoC", "REST APIs", "Authentication"],
+    decisions: [
+      "Kept the scope lightweight and the flow linear to make ordering effortless.",
+      "Built authentication and tracking as the two core pillars of the experience.",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Delivering reliable real-time order tracking in a deliberately lightweight app.",
+        solution:
+          "A streamlined state-driven tracking flow keeps status updates live without adding unnecessary complexity.",
+      },
+    ],
+  },
+
+  {
+    slug: "naji-restaurant",
+    name: "Naji Restaurant",
+    tagline: "Mobile ordering app for Naji Al-Harbi — authentic kebab, a heritage taste since 1951.",
+    category: "Restaurant",
+    platform: "both",
+    accent: "#22d3ee",
+    imageCount: 4,
+    storeShots: true,
+    featured: false,
+    isPrivate: false,
+    // NOTE: Not described in the CV — copy below is grounded in the published
+    // App Store listing and the app's own screens (Naji Al-Harbi kebab
+    // restaurant, est. 1951). Tweak the wording if you'd like it more specific.
+    links: {
+      appStore:
+        "https://apps.apple.com/us/app/%D9%85%D8%B7%D8%A7%D8%B9%D9%85-%D9%86%D8%A7%D8%AC%D9%8A-%D8%A7%D9%84%D8%AD%D8%B1%D8%A8%D9%8A-%D9%84%D9%84%D9%83%D8%A8%D8%A7%D8%A8/id6447362219",
+      playStore: "https://play.google.com/store/apps/details?id=com.efada.kababNagy",
+    },
+    overview:
+      "A mobile ordering app for Naji Al-Harbi Restaurant — a heritage kebab eatery serving its authentic taste since 1951 — letting customers browse the menu and order their favourite dishes from their phone.",
+    problem:
+      "A well-known heritage restaurant wanted its own branded app so loyal customers could browse the menu and order directly, instead of relying on third-party platforms.",
+    solution:
+      "I built a clean, branded Flutter ordering experience — menu browsing and a straightforward ordering flow — that carries the restaurant's identity and makes ordering quick and familiar.",
+    role: "Flutter Developer — built the branded mobile ordering experience and menu flows.",
+    features: [
+      "Menu browsing",
+      "Dish ordering",
+      "Branded, heritage restaurant experience",
+      "Simple, familiar ordering flow",
+    ],
+    stack: ["Flutter", "Dart", "REST APIs"],
+    decisions: [
+      "Built the experience around the restaurant's long-standing heritage brand identity.",
+      "Kept the ordering flow short and familiar for returning customers.",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Giving a heritage restaurant a polished, on-brand app that feels as familiar as the place itself.",
+        solution:
+          "A focused menu-and-order flow wrapped in the restaurant's own visual identity keeps ordering simple and recognisable.",
+      },
+    ],
+  },
+
+  {
+    slug: "plan-a",
+    name: "Plan A",
+    tagline: "Smart travel companion that simplifies visas and passport renewals for international trips.",
+    category: "Travel",
+    platform: "android",
+    accent: "#7c3aed",
+    imageCount: 5,
+    storeShots: true,
+    featured: false,
+    isPrivate: false,
+    links: {
+      playStore: "https://play.google.com/store/apps/details?id=com.efadh.visa",
+    },
+    overview:
+      "Plan A is a smart travel companion that takes the hassle out of international trips — making visas and passport renewals simple, clear, and stress-free. It guides travellers from planning to approval with accurate requirements and a smooth, secure experience.",
+    problem:
+      "Visa and passport-renewal processes are confusing and stressful, with scattered requirements and no clear path from planning to approval.",
+    solution:
+      "I built a guided experience that walks travellers from planning to approval with accurate requirements at each step, so they can travel confidently and with less stress.",
+    role:
+      "Flutter Developer — implemented the guided requirement flows and the supporting screens for planning and approvals.",
+    features: [
+      "Guided visa & passport-renewal flows",
+      "Accurate, step-by-step requirements",
+      "Planning-to-approval journey",
+      "Smooth, secure experience",
+    ],
+    stack: ["Flutter", "Dart", "BLoC", "REST APIs"],
+    decisions: [
+      "Structured the experience as a clear, sequential journey to reduce the anxiety around paperwork.",
+      "Presented requirements explicitly so travellers always know the next step.",
+    ],
+    challenges: [
+      {
+        challenge:
+          "Turning complex, country-specific travel requirements into a clear and calm user flow.",
+        solution:
+          "A guided, step-by-step structure presents only what's relevant at each stage, from planning through to approval.",
+      },
+    ],
+  },
+
+  {
     slug: "satha",
     name: "Satha",
+    nativeName: "سطحة",
     tagline: "On-demand flatbed tow-truck platform — customer, driver & admin apps that rescue stranded cars on the road.",
     category: "Roadside Assistance",
     platform: "android",
@@ -204,233 +544,9 @@ export const projects: Project[] = [
   },
 
   {
-    slug: "almustarih",
-    name: "Almustarih",
-    tagline: "Auto-parts & car-service marketplace connecting owners, vendors, and workshops.",
-    category: "Service Marketplace",
-    platform: "both",
-    accent: "#22d3ee",
-    imageCount: 5,
-    storeShots: true,
-    featured: true,
-    isPrivate: false,
-    links: {
-      appStore:
-        "https://apps.apple.com/us/app/%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D8%B1%D9%8A%D8%AD/id6757157320",
-      playStore: "https://play.google.com/store/apps/details?id=com.efadh.almustarih",
-    },
-    overview:
-      "A comprehensive mobile application for the Almustarih platform — a service marketplace that connects car owners, spare-parts vendors, and service workshops. Customers browse and purchase auto parts, schedule car maintenance, and track deliveries in real time.",
-    problem:
-      "Car owners, spare-parts vendors, and workshops had no single channel to transact, communicate, and coordinate deliveries — making part sourcing and maintenance slow and fragmented.",
-    solution:
-      "I built a multi-role system that enables seamless communication between clients, delivery drivers, and service centres. State is managed with BLoC, APIs are handled with Dio, Firebase powers push notifications and messaging, and Google Maps provides live location tracking for deliveries.",
-    role:
-      "Flutter Developer — implemented the multi-role architecture, BLoC state layer, Dio networking, Firebase messaging/notifications, and Google Maps tracking.",
-    features: [
-      "Browse & purchase auto parts",
-      "Schedule car maintenance services",
-      "Real-time delivery tracking on Google Maps",
-      "Multi-role flows — clients, drivers & service centres",
-      "In-app messaging between parties",
-      "Firebase push notifications",
-    ],
-    stack: ["Flutter", "Dart", "BLoC", "Dio", "Firebase", "Google Maps API", "REST APIs"],
-    decisions: [
-      "Used BLoC to keep distinct client / driver / service-centre experiences cleanly separated yet consistent.",
-      "Centralised networking on Dio for interceptors, structured error handling, and predictable API calls.",
-      "Combined Firebase messaging with Google Maps so order updates and live tracking stay in sync.",
-    ],
-    challenges: [
-      {
-        challenge:
-          "Keeping three different user types — clients, drivers, and service centres — in sync around a single order in real time.",
-        solution:
-          "A shared BLoC-driven data flow plus Firebase messaging kept every party's view of an order consistent as its status changed.",
-      },
-    ],
-  },
-
-  {
-    slug: "alaswak",
-    name: "Alaswak",
-    tagline: "Multi-store commerce bringing electronics shops, restaurants, and cafés into one app.",
-    category: "E-commerce",
-    platform: "both",
-    accent: "#7c3aed",
-    imageCount: 4,
-    storeShots: true,
-    featured: true,
-    isPrivate: false,
-    links: {
-      appStore:
-        "https://apps.apple.com/us/app/%D8%A7%D9%84%D8%A3%D8%B3%D9%88%D8%A7%D9%82/id6747349206",
-      playStore: "https://play.google.com/store/apps/details?id=com.efadh.alaswak",
-    },
-    overview:
-      "Alaswak brings electronics stores, restaurants, and cafés together in one place, so customers can find what they want fast, order, and get it delivered to their door — a smooth shopping experience with smart suggestions, easy checkout, and real-time order tracking.",
-    problem:
-      "Shoppers had to juggle separate apps for electronics, food, and cafés, with inconsistent checkout and no unified way to track their orders.",
-    solution:
-      "I built a single, multi-store commerce experience with smart product suggestions, a streamlined checkout, and real-time order tracking — so every purchase feels simpler and quicker regardless of the store type.",
-    role:
-      "Flutter Developer — implemented the multi-store browsing experience, cart and checkout flows, and real-time order tracking.",
-    features: [
-      "Unified browsing across electronics, restaurants & cafés",
-      "Smart product suggestions",
-      "Streamlined, easy checkout",
-      "Real-time order tracking",
-      "Per-store catalogues and offers",
-    ],
-    stack: ["Flutter", "Dart", "BLoC", "REST APIs", "Firebase"],
-    decisions: [
-      "Designed a flexible catalogue model so different store types (retail vs. food) share one browsing and checkout flow.",
-      "Used a reactive state layer to reflect order status changes immediately in the UI.",
-    ],
-    challenges: [
-      {
-        challenge:
-          "Unifying very different store types — electronics, restaurants, and cafés — under one consistent shopping and checkout experience.",
-        solution:
-          "A shared catalogue and checkout abstraction let each store type plug in while keeping the customer experience uniform.",
-      },
-    ],
-  },
-
-  {
-    slug: "makhdom",
-    name: "Makhdom",
-    tagline: "On-demand app connecting customers with professional technicians for daily services.",
-    category: "On-Demand Services",
-    platform: "both",
-    accent: "#0ea5e9",
-    imageCount: 6,
-    storeShots: true,
-    featured: false,
-    isPrivate: false,
-    links: {
-      appStore:
-        "https://apps.apple.com/us/app/%D9%85%D8%AE%D9%80%D8%AF%D9%88%D9%85-%D9%85%D9%83%D9%81%D9%8A/id6739352807",
-      playStore: "https://play.google.com/store/apps/details?id=com.efadh.makhdom",
-    },
-    overview:
-      "A mobile application that connects customers with professional technicians for a range of daily services, with quick service requests, provider matching, and seamless in-app interaction between users and providers.",
-    problem:
-      "Finding a trusted technician for everyday services was slow and informal, with no structured way to request help or communicate with providers.",
-    solution:
-      "I built quick service-request flows, a provider-matching experience, and in-app interaction so customers and technicians can connect and coordinate smoothly inside a single app.",
-    role:
-      "Flutter Developer — implemented the request flows, provider matching experience, and user/provider interaction screens.",
-    features: [
-      "Quick service requests",
-      "Customer ↔ provider matching",
-      "Seamless in-app interaction",
-      "Service categories for daily needs",
-    ],
-    stack: ["Flutter", "Dart", "BLoC", "REST APIs", "Firebase"],
-    decisions: [
-      "Kept the request flow short and guided to reduce friction for first-time users.",
-      "Separated customer and provider experiences while sharing core service logic.",
-    ],
-    challenges: [
-      {
-        challenge: "Matching customers to the right provider quickly and clearly.",
-        solution:
-          "A focused matching flow surfaces relevant providers and lets both sides interact in-app without leaving the experience.",
-      },
-    ],
-  },
-
-  {
-    slug: "wasal",
-    name: "Wasal",
-    tagline: "Lightweight delivery app connecting customers with couriers for meals and store items.",
-    category: "Delivery",
-    platform: "both",
-    accent: "#22d3ee",
-    imageCount: 5,
-    storeShots: true,
-    featured: false,
-    isPrivate: false,
-    links: {
-      appStore: "https://apps.apple.com/us/app/wasal-%D9%88%D8%A7%D8%B5%D9%84/id6754983789",
-      playStore: "https://play.google.com/store/apps/details?id=com.efadh.wasal",
-    },
-    overview:
-      "Wasal is a lightweight delivery app — first built as a Flutter training project — that connects customers with couriers to order meals and store items quickly and without hassle. It includes real-time order tracking through to doorstep delivery and full authentication for a simple, secure experience.",
-    problem:
-      "Customers wanted a fast, no-friction way to order meals and store items and follow their delivery, without a heavy or complicated app.",
-    solution:
-      "I built a focused delivery flow with full authentication and real-time order tracking from checkout through to doorstep delivery, keeping the experience simple and secure.",
-    role:
-      "Flutter Developer — built the app end-to-end, including authentication and the real-time order-tracking flow.",
-    features: [
-      "Order meals & store items",
-      "Real-time order tracking to the doorstep",
-      "Full authentication",
-      "Simple, secure experience",
-    ],
-    stack: ["Flutter", "Dart", "BLoC", "REST APIs", "Authentication"],
-    decisions: [
-      "Kept the scope lightweight and the flow linear to make ordering effortless.",
-      "Built authentication and tracking as the two core pillars of the experience.",
-    ],
-    challenges: [
-      {
-        challenge:
-          "Delivering reliable real-time order tracking in a deliberately lightweight app.",
-        solution:
-          "A streamlined state-driven tracking flow keeps status updates live without adding unnecessary complexity.",
-      },
-    ],
-  },
-
-  {
-    slug: "plan-a",
-    name: "Plan A",
-    tagline: "Smart travel companion that simplifies visas and passport renewals for international trips.",
-    category: "Travel",
-    platform: "android",
-    accent: "#7c3aed",
-    imageCount: 5,
-    storeShots: true,
-    featured: false,
-    isPrivate: false,
-    links: {
-      playStore: "https://play.google.com/store/apps/details?id=com.efadh.visa",
-    },
-    overview:
-      "Plan A is a smart travel companion that takes the hassle out of international trips — making visas and passport renewals simple, clear, and stress-free. It guides travellers from planning to approval with accurate requirements and a smooth, secure experience.",
-    problem:
-      "Visa and passport-renewal processes are confusing and stressful, with scattered requirements and no clear path from planning to approval.",
-    solution:
-      "I built a guided experience that walks travellers from planning to approval with accurate requirements at each step, so they can travel confidently and with less stress.",
-    role:
-      "Flutter Developer — implemented the guided requirement flows and the supporting screens for planning and approvals.",
-    features: [
-      "Guided visa & passport-renewal flows",
-      "Accurate, step-by-step requirements",
-      "Planning-to-approval journey",
-      "Smooth, secure experience",
-    ],
-    stack: ["Flutter", "Dart", "BLoC", "REST APIs"],
-    decisions: [
-      "Structured the experience as a clear, sequential journey to reduce the anxiety around paperwork.",
-      "Presented requirements explicitly so travellers always know the next step.",
-    ],
-    challenges: [
-      {
-        challenge:
-          "Turning complex, country-specific travel requirements into a clear and calm user flow.",
-        solution:
-          "A guided, step-by-step structure presents only what's relevant at each stage, from planning through to approval.",
-      },
-    ],
-  },
-
-  {
     slug: "hidaya",
     name: "Hidaya",
+    nativeName: "هداية",
     tagline: "A meaningful Quran companion for reading, listening, and reflecting — anywhere.",
     category: "Islamic / Lifestyle",
     platform: "android",
@@ -555,56 +671,14 @@ export const projects: Project[] = [
       },
     ],
   },
-
-  {
-    slug: "naji-restaurant",
-    name: "Naji Restaurant",
-    tagline: "Mobile ordering app for Naji Al-Harbi — authentic kebab, a heritage taste since 1951.",
-    category: "Restaurant",
-    platform: "both",
-    accent: "#22d3ee",
-    imageCount: 4,
-    storeShots: true,
-    featured: false,
-    isPrivate: false,
-    // NOTE: Not described in the CV — copy below is grounded in the published
-    // App Store listing and the app's own screens (Naji Al-Harbi kebab
-    // restaurant, est. 1951). Tweak the wording if you'd like it more specific.
-    links: {
-      appStore:
-        "https://apps.apple.com/us/app/%D9%85%D8%B7%D8%A7%D8%B9%D9%85-%D9%86%D8%A7%D8%AC%D9%8A-%D8%A7%D9%84%D8%AD%D8%B1%D8%A8%D9%8A-%D9%84%D9%84%D9%83%D8%A8%D8%A7%D8%A8/id6447362219",
-      playStore: "https://play.google.com/store/apps/details?id=com.efada.kababNagy",
-    },
-    overview:
-      "A mobile ordering app for Naji Al-Harbi Restaurant — a heritage kebab eatery serving its authentic taste since 1951 — letting customers browse the menu and order their favourite dishes from their phone.",
-    problem:
-      "A well-known heritage restaurant wanted its own branded app so loyal customers could browse the menu and order directly, instead of relying on third-party platforms.",
-    solution:
-      "I built a clean, branded Flutter ordering experience — menu browsing and a straightforward ordering flow — that carries the restaurant's identity and makes ordering quick and familiar.",
-    role: "Flutter Developer — built the branded mobile ordering experience and menu flows.",
-    features: [
-      "Menu browsing",
-      "Dish ordering",
-      "Branded, heritage restaurant experience",
-      "Simple, familiar ordering flow",
-    ],
-    stack: ["Flutter", "Dart", "REST APIs"],
-    decisions: [
-      "Built the experience around the restaurant's long-standing heritage brand identity.",
-      "Kept the ordering flow short and familiar for returning customers.",
-    ],
-    challenges: [
-      {
-        challenge:
-          "Giving a heritage restaurant a polished, on-brand app that feels as familiar as the place itself.",
-        solution:
-          "A focused menu-and-order flow wrapped in the restaurant's own visual identity keeps ordering simple and recognisable.",
-      },
-    ],
-  },
 ];
 
 export const featuredProjects = projects.filter((p) => p.featured);
+
+/** True when the app has a public App Store or Google Play listing. */
+export function isOnStore(p: Project): boolean {
+  return Boolean(p.links.appStore || p.links.playStore);
+}
 
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);

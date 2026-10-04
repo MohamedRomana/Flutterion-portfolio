@@ -1,80 +1,132 @@
 import Image from "next/image";
-import { GraduationCap, Briefcase, MapPin, Languages } from "lucide-react";
+import { Briefcase, GraduationCap, MapPin } from "lucide-react";
 import { Container, Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
+import { Eyebrow } from "@/components/ui/SectionHeading";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { LocalTime } from "@/components/ui/LocalTime";
+import { FlutterLogo } from "@/components/ui/FlutterLogo";
+import { Marquee } from "@/components/ui/Marquee";
 import { profile } from "@/data/profile";
-
-const facts = [
-  { icon: Briefcase, label: "Now", value: "Flutter Developer @ Efadh For Web Solution" },
-  { icon: GraduationCap, label: "Education", value: "B.Sc. Computer Science — Mansoura University" },
-  { icon: MapPin, label: "Based in", value: profile.location },
-  { icon: Languages, label: "Focus", value: "Mobile · Flutter & Dart" },
-];
+import { timeline } from "@/data/services";
+import { techStack } from "@/data/skills";
 
 export function About() {
+  const work = timeline.find((t) => t.type === "work");
+  const edu = timeline.find((t) => t.type === "education");
+
   return (
     <Section id="about" ariaLabel="About">
       <Container>
-        <div className="grid gap-12 lg:grid-cols-[1fr_0.85fr] lg:items-center">
-          <div className="flex flex-col gap-6">
-            <Reveal>
-              <span className="inline-flex items-center gap-2 rounded-full border border-border-strong bg-card px-3.5 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-primary">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden />
-                About
-              </span>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-                Flutter is my craft — <span className="text-gradient">not just a tool.</span>
-              </h2>
-            </Reveal>
-            <div className="flex flex-col gap-4">
-              {profile.longBio.map((para, i) => (
-                <Reveal key={i} delay={0.1 + i * 0.06}>
-                  <p className="text-pretty leading-relaxed text-muted">{para}</p>
-                </Reveal>
-              ))}
+        <div className="grid gap-4 lg:auto-rows-[minmax(15rem,auto)] lg:grid-cols-4">
+          {/* Photo */}
+          <Reveal className="lg:row-span-2">
+            <div className="group relative h-full min-h-[26rem] overflow-hidden rounded-[1.75rem] border border-border-strong">
+              <Image
+                src="/about-me.jpg"
+                alt={`Portrait of ${profile.name}`}
+                fill
+                sizes="(max-width: 1024px) 100vw, 25vw"
+                className="object-cover object-[50%_30%] transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                <p className="text-2xl font-semibold tracking-[-0.03em]">{profile.name}</p>
+                <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-white/70">
+                  {profile.title}
+                </p>
+              </div>
             </div>
-          </div>
+          </Reveal>
 
-          {/* Profile card */}
+          {/* Bio */}
+          <Reveal delay={0.05} className="lg:col-span-2">
+            <SpotlightCard className="h-full" innerClassName="flex flex-col justify-between gap-8 p-7 sm:p-9">
+              <Eyebrow index="03">About</Eyebrow>
+              <div>
+                <h2 className="text-[clamp(2rem,3.6vw,3.25rem)] font-semibold leading-[1] tracking-[-0.045em]">
+                  Flutter is my craft — <span className="serif text-primary">not just a tool.</span>
+                </h2>
+                <p className="mt-5 max-w-2xl text-pretty leading-relaxed text-muted">
+                  {profile.longBio[0]}
+                </p>
+              </div>
+            </SpotlightCard>
+          </Reveal>
+
+          {/* Location + time */}
           <Reveal delay={0.1}>
-            <div className="glow-shadow relative overflow-hidden rounded-3xl border border-border bg-card p-7">
-              <div className="bg-dot pointer-events-none absolute inset-0 opacity-50" />
-              <div className="relative flex items-center gap-4">
-                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full ring-2 ring-primary/30">
-                  <Image
-                    src="/about-me.jpg"
-                    alt={profile.name}
-                    fill
-                    sizes="80px"
-                    className="object-cover object-top"
-                  />
+            <SpotlightCard className="h-full" innerClassName="flex flex-col justify-between gap-8 p-7">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong">
+                <MapPin className="h-5 w-5 text-primary" />
+              </span>
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
+                  Based in
+                </p>
+                <p className="mt-1 text-xl font-semibold tracking-tight">{profile.location}</p>
+                <p className="mt-4 font-mono text-4xl tabular-nums tracking-tight">
+                  <LocalTime />
+                </p>
+                <p className="mt-1 text-xs text-muted">Local time · GMT+2/3 · works with KSA &amp; Gulf</p>
+              </div>
+            </SpotlightCard>
+          </Reveal>
+
+          {/* Now */}
+          {work && (
+            <Reveal delay={0.12}>
+              <SpotlightCard className="h-full" innerClassName="flex flex-col justify-between gap-8 p-7">
+                <div className="flex items-center justify-between">
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong">
+                    <Briefcase className="h-5 w-5 text-primary" />
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-lime px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-on-lime">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-on-lime" /> Now
+                  </span>
                 </div>
                 <div>
-                  <p className="text-lg font-semibold">{profile.name}</p>
-                  <p className="font-mono text-sm text-primary">{profile.title}</p>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
+                    {work.period}
+                  </p>
+                  <p className="mt-1 text-xl font-semibold tracking-tight">{work.title}</p>
+                  <p className="text-sm text-muted">{work.organization}</p>
                 </div>
-              </div>
+              </SpotlightCard>
+            </Reveal>
+          )}
 
-              <ul className="relative mt-7 flex flex-col divide-y divide-border">
-                {facts.map((f) => (
-                  <li key={f.label} className="flex items-start gap-3 py-3.5">
-                    <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background-secondary text-primary">
-                      <f.icon className="h-[18px] w-[18px]" />
-                    </span>
-                    <span className="flex flex-col">
-                      <span className="font-mono text-[11px] uppercase tracking-wider text-muted">
-                        {f.label}
-                      </span>
-                      <span className="text-sm font-medium text-foreground">
-                        {f.value}
-                      </span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Education */}
+          {edu && (
+            <Reveal delay={0.14}>
+              <SpotlightCard className="h-full" innerClassName="flex flex-col justify-between gap-8 p-7">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong">
+                  <GraduationCap className="h-5 w-5 text-primary" />
+                </span>
+                <div>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
+                    {edu.period}
+                  </p>
+                  <p className="mt-1 text-xl font-semibold tracking-tight">{edu.title}</p>
+                  <p className="text-sm text-muted">{edu.organization}</p>
+                </div>
+              </SpotlightCard>
+            </Reveal>
+          )}
+
+          {/* Flutter */}
+          <Reveal delay={0.16}>
+            <SpotlightCard className="h-full" innerClassName="flex flex-col justify-between gap-6 py-7">
+              <div className="flex items-center gap-3 px-7">
+                <FlutterLogo className="h-9 w-auto" />
+                <p className="text-sm leading-snug text-muted">
+                  Dart &amp; Flutter,
+                  <br />
+                  <span className="text-foreground">BLoC-first, always.</span>
+                </p>
+              </div>
+              <Marquee items={techStack.slice(0, 9)} />
+            </SpotlightCard>
           </Reveal>
         </div>
       </Container>

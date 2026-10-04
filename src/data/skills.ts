@@ -1,4 +1,5 @@
 import type { SkillGroup, Stat, ProcessStep } from "@/types";
+import { projects } from "./projects";
 
 /**
  * Skills below are limited to what the CV explicitly lists or what is
@@ -91,14 +92,19 @@ export const techStack: string[] = [
 
 /**
  * Stats use only real, verifiable numbers — no invented metrics.
- * 12 = shipped apps in this portfolio. 5 = roles in the RGA platform (CV).
- * 2 = iOS + Android. The fourth stat is a factual status, not a metric.
+ * The app count is derived from the projects list so it never drifts.
+ * 5 = roles in the RGA platform (CV). 2 = iOS + Android.
  */
+export const shippedCount = projects.length;
+export const storeCount = projects.filter(
+  (p) => p.links.appStore || p.links.playStore,
+).length;
+
 export const stats: Stat[] = [
-  { value: 12, display: "12", label: "Flutter apps designed & built", suffix: "" },
-  { value: 2, display: "2", label: "Platforms shipped — iOS & Android", suffix: "" },
+  { value: shippedCount, display: String(shippedCount), label: "Flutter apps designed & built", suffix: "" },
+  { value: storeCount, display: String(storeCount), label: "Live on the App Store & Google Play", suffix: "" },
   { value: 5, display: "5", label: "User roles in the flagship RGA platform", suffix: "" },
-  { value: null, display: "BLoC", label: "First architecture, every project", suffix: "" },
+  { value: 2, display: "2", label: "Platforms from one codebase", suffix: "" },
 ];
 
 export const processSteps: ProcessStep[] = [

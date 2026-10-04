@@ -17,6 +17,8 @@ export const profile: Profile = {
   githubUrl: "https://github.com/MohamedRomana",
   linkedin: "Mohamed Romana",
   linkedinUrl: "https://www.linkedin.com/in/mohamed-romana-78a654295/",
+  siteUrl: "https://flutterion-portfolio.vercel.app",
+  cvUrl: "/Mohamed-Romana-CV.pdf",
   shortBio:
     "Flutter Developer crafting scalable, responsive, and high-performance mobile applications.",
   longBio: [

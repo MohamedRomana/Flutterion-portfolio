@@ -2,32 +2,71 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { usePathname } from "next/navigation";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+} from "motion/react";
+import { ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { LocalTime } from "@/components/ui/LocalTime";
+import { GithubIcon, LinkedinIcon, WhatsappIcon } from "@/components/ui/BrandIcons";
+import { profile } from "@/data/profile";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { label: "About", href: "/#about" },
-  { label: "Skills", href: "/#skills" },
-  { label: "Projects", href: "/#projects" },
-  { label: "Process", href: "/#process" },
-  { label: "Experience", href: "/#experience" },
-  { label: "Services", href: "/#services" },
+  { label: "Work", id: "work" },
+  { label: "Projects", id: "projects" },
+  { label: "About", id: "about" },
+  { label: "Services", id: "services" },
+  { label: "Process", id: "process" },
+  { label: "CV", id: "cv" },
 ];
 
-export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  const reduce = useReducedMotion();
+/** Tracks which home-page section is currently in the middle of the viewport. */
+function useActiveSection(enabled: boolean): string | null {
+  const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    if (!enabled) return;
+    const els = NAV_LINKS.map((l) => document.getElementById(l.id)).filter(
+      (el): el is HTMLElement => Boolean(el),
+    );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [enabled]);
+
+  return enabled ? active : null;
+}
+
+export function Navbar() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [open, setOpen] = useState(false);
+  const reduce = useReducedMotion();
+  const active = useActiveSection(isHome);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (y) => {
+    const prev = scrollY.getPrevious() ?? 0;
+    setScrolled(y > 16);
+    setHidden(y > 480 && y > prev + 4);
+    if (y < prev - 4) setHidden(false);
+  });
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -36,39 +75,64 @@ export function Navbar() {
     };
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
     <header className="fixed inset-x-0 top-0 z-[80]">
-      <div
-        className={cn(
-          "transition-all duration-300",
-          scrolled
-            ? "glass-nav border-b border-border py-2.5"
-            : "border-b border-transparent py-4",
-        )}
+      <motion.div
+        animate={{ y: hidden && !open ? "-120%" : 0 }}
+        transition={{ duration: reduce ? 0 : 0.45, ease: [0.16, 1, 0.3, 1] }}
+        className="px-3 pt-3 sm:px-5 sm:pt-4"
       >
-        <nav className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 sm:px-8">
-          <Logo priority />
+        <nav
+          aria-label="Primary"
+          className={cn(
+            "mx-auto flex w-full max-w-[84rem] items-center justify-between gap-4 rounded-full border px-3 py-2 transition-[background-color,border-color,box-shadow] duration-500 sm:px-4",
+            scrolled || open
+              ? "glass border-border shadow-[0_20px_50px_-30px_rgba(0,0,0,0.6)]"
+              : "border-transparent",
+          )}
+        >
+          <Logo />
 
-          <ul className="hidden items-center gap-1 lg:flex">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="relative rounded-full px-3.5 py-2 text-sm text-muted transition-colors duration-200 hover:text-foreground"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
+          <ul className="hidden items-center gap-0.5 rounded-full border border-border bg-background/40 p-1 lg:flex">
+            {NAV_LINKS.map((link) => {
+              const isActive = active === link.id;
+              return (
+                <li key={link.id}>
+                  <Link
+                    href={`/#${link.id}`}
+                    className={cn(
+                      "relative block rounded-full px-4 py-1.5 text-sm transition-colors duration-200",
+                      isActive ? "text-background" : "text-muted hover:text-foreground",
+                    )}
+                  >
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-active"
+                        className="absolute inset-0 -z-10 rounded-full bg-foreground"
+                        transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                      />
+                    )}
+                    {link.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex items-center gap-2">
             <ThemeToggle />
             <Link
               href="/#contact"
-              className="hidden items-center gap-1.5 rounded-full bg-gradient-to-r from-primary to-cyan px-5 py-2.5 text-sm font-medium text-white shadow-[0_10px_30px_-12px_var(--glow)] transition-all duration-300 hover:brightness-110 sm:inline-flex"
+              className="hidden h-10 items-center gap-1.5 rounded-full bg-lime px-5 text-sm font-medium text-on-lime transition-transform duration-300 hover:scale-[1.03] sm:inline-flex"
             >
-              Contact
+              Let&apos;s talk
               <ArrowUpRight className="h-4 w-4" />
             </Link>
 
@@ -77,56 +141,99 @@ export function Navbar() {
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border-strong bg-card text-foreground transition-colors hover:border-primary/50 hover:text-primary lg:hidden"
+              aria-controls="mobile-menu"
+              className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-border-strong bg-card text-foreground lg:hidden"
             >
-              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              <span className="sr-only">Menu</span>
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute h-[1.5px] w-4 bg-current transition-transform duration-300",
+                  open ? "rotate-45" : "-translate-y-[4px]",
+                )}
+              />
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute h-[1.5px] w-4 bg-current transition-transform duration-300",
+                  open ? "-rotate-45" : "translate-y-[4px]",
+                )}
+              />
             </button>
           </div>
         </nav>
-      </div>
+      </motion.div>
 
       {/* Mobile menu */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="glass-nav fixed inset-0 top-0 z-[-1] flex flex-col lg:hidden"
+            id="mobile-menu"
+            initial={reduce ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }}
+            animate={reduce ? { opacity: 1 } : { clipPath: "inset(0 0 0% 0)" }}
+            exit={reduce ? { opacity: 0 } : { clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[-1] flex flex-col bg-background lg:hidden"
           >
-            <div className="mt-[72px] flex flex-1 flex-col gap-2 overflow-y-auto px-6 pb-10 pt-8">
-              {NAV_LINKS.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={reduce ? false : { opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.05 * i + 0.05, duration: 0.3 }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="flex items-center justify-between border-b border-border py-4 text-2xl font-semibold tracking-tight"
+            <div className="flex flex-1 flex-col justify-between overflow-y-auto px-6 pb-8 pt-28">
+              <ul className="flex flex-col">
+                {[...NAV_LINKS, { label: "Contact", id: "contact" }].map((link, i) => (
+                  <motion.li
+                    key={link.id}
+                    initial={reduce ? false : { opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15 + 0.05 * i, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    {link.label}
-                    <ArrowUpRight className="h-5 w-5 text-muted" />
-                  </Link>
-                </motion.div>
-              ))}
+                    <Link
+                      href={`/#${link.id}`}
+                      onClick={() => setOpen(false)}
+                      className="group flex items-baseline gap-4 border-b border-border py-3.5"
+                    >
+                      <span className="font-mono text-xs text-primary">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="text-4xl font-semibold tracking-[-0.04em] transition-transform duration-300 group-active:translate-x-1">
+                        {link.label}
+                      </span>
+                    </Link>
+                  </motion.li>
+                ))}
+              </ul>
+
               <motion.div
-                initial={reduce ? false : { opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.3 }}
-                className="mt-6"
+                initial={reduce ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="mt-10 flex items-end justify-between gap-4"
               >
-                <Link
-                  href="/#contact"
-                  onClick={() => setOpen(false)}
-                  className="flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-primary to-cyan px-6 py-4 text-base font-medium text-white"
-                >
-                  Get in touch
-                  <ArrowUpRight className="h-5 w-5" />
-                </Link>
+                <div className="flex flex-col gap-1 font-mono text-xs uppercase tracking-[0.16em] text-muted">
+                  <span>{profile.location}</span>
+                  <span>
+                    Local time <LocalTime className="text-foreground" />
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  {[
+                    { href: profile.githubUrl, label: "GitHub", Icon: GithubIcon },
+                    { href: profile.linkedinUrl, label: "LinkedIn", Icon: LinkedinIcon },
+                    {
+                      href: `https://wa.me/${profile.phone.replace(/[^\d]/g, "")}`,
+                      label: "WhatsApp",
+                      Icon: WhatsappIcon,
+                    },
+                  ].map(({ href, label, Icon }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-muted"
+                    >
+                      <Icon className="h-[18px] w-[18px]" />
+                    </a>
+                  ))}
+                </div>
               </motion.div>
             </div>
           </motion.div>

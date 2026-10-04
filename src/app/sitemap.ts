@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/data/projects";
+import { profile } from "@/data/profile";
 
-const SITE_URL = "https://flutterion.dev";
+const SITE_URL = profile.siteUrl;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const projectRoutes: MetadataRoute.Sitemap = projects.map((p) => ({

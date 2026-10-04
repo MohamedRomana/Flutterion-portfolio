@@ -1,136 +1,202 @@
-import { ArrowUpRight, Check, Lock, Star } from "lucide-react";
+"use client";
+
+import { useRef } from "react";
+import Link from "next/link";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "motion/react";
+import { ArrowUpRight, Check } from "lucide-react";
 import { Container, Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Reveal } from "@/components/ui/Reveal";
-import { PhoneFrame } from "@/components/ui/PhoneFrame";
-import { Button } from "@/components/ui/Button";
-import { cn } from "@/lib/utils";
+import { PhoneFrame, coverOf, shotRatio } from "@/components/ui/PhoneFrame";
+import { StoreLinks } from "@/components/ui/StoreLinks";
 import { featuredProjects } from "@/data/projects";
+import { useIsLarge } from "@/hooks/useMediaQuery";
 import type { Project } from "@/types";
 
-function FeaturedRow({ project, index }: { project: Project; index: number }) {
-  const flipped = index % 2 === 1;
-  const second = Math.min(2, project.imageCount);
-  const coverMain = project.cover ?? `/screens/${project.slug}/1.jpg`;
-  const coverSecondary = project.coverAlt ?? `/screens/${project.slug}/${second}.jpg`;
+function platformLabel(platform: Project["platform"]) {
+  return platform === "both" ? "iOS & Android" : platform === "ios" ? "iOS" : "Android";
+}
+
+function FeaturedCard({
+  project,
+  index,
+  total,
+  progress,
+  stack,
+}: {
+  project: Project;
+  index: number;
+  total: number;
+  progress: MotionValue<number>;
+  /** Sticky-stack behaviour (large screens, motion allowed). */
+  stack: boolean;
+}) {
+  const targetScale = 1 - (total - index - 1) * 0.04;
+  const scale = useTransform(progress, [index / total, 1], [1, targetScale]);
+  const ratio = shotRatio(project);
+  const second = `/screens/${project.slug}/${Math.min(2, project.imageCount)}.jpg`;
+  const third = `/screens/${project.slug}/${Math.min(3, project.imageCount)}.jpg`;
 
   return (
-    <Reveal>
-      <article className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
-        {/* Media */}
-        <div className={cn("relative", flipped && "lg:order-2")}>
-          <div
-            className="relative overflow-hidden rounded-3xl border border-border p-8 sm:p-12"
+    <div className={stack ? "sticky top-0 flex h-svh items-center" : "mb-6 last:mb-0"}>
+      <motion.article
+        style={stack ? { scale, top: `calc(${index * 22}px)` } : undefined}
+        className="relative w-full origin-top overflow-hidden rounded-[2rem] border border-border-strong bg-card lg:h-[min(80svh,46rem)]"
+      >
+        {/* Accent wash */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: `radial-gradient(80% 90% at 100% 0%, ${project.accent}38, transparent 60%), radial-gradient(60% 60% at 0% 100%, ${project.accent}14, transparent 70%)`,
+          }}
+        />
+        <div aria-hidden className="bg-dot pointer-events-none absolute inset-0 opacity-60" />
+
+        <div className="relative grid h-full lg:grid-cols-[1fr_1.05fr]">
+          {/* Copy */}
+          <div className="flex flex-col p-6 sm:p-10 lg:p-12">
+            <div className="flex items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
+              <span>
+                <span className="text-foreground">{String(index + 1).padStart(2, "0")}</span> /{" "}
+                {String(total).padStart(2, "0")}
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full" style={{ background: project.accent }} />
+                {project.category}
+              </span>
+            </div>
+
+            <div className="mt-8 lg:mt-auto">
+              {project.nativeName && (
+                <p lang="ar" dir="rtl" className="mb-2 w-fit font-arabic text-lg font-bold text-muted">
+                  {project.nativeName}
+                </p>
+              )}
+              <h3 className="text-[clamp(2.4rem,4.6vw,4.4rem)] font-semibold leading-[0.95] tracking-[-0.045em]">
+                {project.name}
+              </h3>
+              <p className="mt-5 max-w-lg text-pretty leading-relaxed text-muted">
+                {project.tagline}
+              </p>
+
+              <ul className="mt-6 grid gap-2.5">
+                {project.features.slice(0, 3).map((f) => (
+                  <li key={f} className="flex items-start gap-2.5 text-sm text-foreground/85">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-6 flex flex-wrap gap-1.5">
+                <span className="rounded-full bg-foreground px-2.5 py-1 font-mono text-[11px] text-background">
+                  {platformLabel(project.platform)}
+                </span>
+                {project.stack.slice(0, 4).map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full border border-border-strong px-2.5 py-1 font-mono text-[11px] text-muted"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="group/cs inline-flex h-12 items-center gap-2 rounded-full bg-foreground px-6 text-sm font-medium text-background transition-transform duration-300 hover:scale-[1.03]"
+                >
+                  Case study
+                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover/cs:-translate-y-0.5 group-hover/cs:translate-x-0.5" />
+                </Link>
+                <StoreLinks project={project} size="sm" />
+              </div>
+            </div>
+          </div>
+
+          {/* Screens */}
+          <Link
+            href={`/projects/${project.slug}`}
+            data-cursor-label="View"
+            aria-label={`Open the ${project.name} case study`}
+            className="group/shots relative flex min-h-[24rem] items-center justify-center overflow-hidden border-t border-border p-6 sm:min-h-[30rem] lg:min-h-0 lg:border-l lg:border-t-0"
             style={{
-              background: `radial-gradient(120% 100% at 50% 0%, ${project.accent}1f, var(--card) 70%)`,
+              background: `linear-gradient(160deg, ${project.accent}26, transparent 70%)`,
             }}
           >
-            <div className="bg-dot pointer-events-none absolute inset-0 opacity-40" />
-            {project.storeShots ? (
-              <div className="relative mx-auto w-[78%] max-w-[280px]">
+            <div className="relative flex w-full max-w-md items-center justify-center">
+              <div className="w-[38%] translate-x-[18%] translate-y-6 -rotate-[7deg] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/shots:-translate-x-[2%] group-hover/shots:-rotate-[10deg]">
                 <PhoneFrame
-                  src={coverMain}
-                  alt={`${project.name} app preview`}
-                  store
-                  sizes="280px"
+                  src={second}
+                  alt={`${project.name} secondary screen`}
+                  ratio={ratio}
+                  sizes="(max-width: 1024px) 34vw, 180px"
+                  className="brightness-90"
                 />
               </div>
-            ) : (
-              <div className="relative mx-auto flex max-w-sm items-center justify-center">
-                <div className="w-[42%] translate-y-4 -rotate-6">
-                  <PhoneFrame
-                    src={coverSecondary}
-                    alt={`${project.name} secondary screen`}
-                    sizes="160px"
-                  />
-                </div>
-                <div className="-ml-6 w-[48%] rotate-3">
-                  <PhoneFrame
-                    src={coverMain}
-                    alt={`${project.name} main screen`}
-                    sizes="200px"
-                  />
-                </div>
+              <div className="relative z-10 w-[44%] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/shots:-translate-y-3 group-hover/shots:scale-[1.03]">
+                <PhoneFrame
+                  src={coverOf(project)}
+                  alt={`${project.name} main screen`}
+                  ratio={ratio}
+                  sizes="(max-width: 1024px) 40vw, 220px"
+                />
               </div>
-            )}
-          </div>
+              <div className="w-[38%] -translate-x-[18%] translate-y-6 rotate-[7deg] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/shots:translate-x-[2%] group-hover/shots:rotate-[10deg]">
+                <PhoneFrame
+                  src={third}
+                  alt={`${project.name} tertiary screen`}
+                  ratio={ratio}
+                  sizes="(max-width: 1024px) 34vw, 180px"
+                  className="brightness-90"
+                />
+              </div>
+            </div>
+          </Link>
         </div>
-
-        {/* Content */}
-        <div className={cn("flex flex-col gap-5", flipped && "lg:order-1")}>
-          <div className="flex flex-wrap items-center gap-2">
-            <span
-              className="rounded-full px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-wide text-white"
-              style={{ background: project.accent }}
-            >
-              {project.category}
-            </span>
-            <span className="inline-flex items-center gap-1 rounded-full border border-border-strong bg-card px-3 py-1 font-mono text-[11px] uppercase tracking-wide text-muted">
-              <Star className="h-3 w-3 text-primary" /> Featured
-            </span>
-            {project.isPrivate && (
-              <span className="inline-flex items-center gap-1 rounded-full border border-border-strong bg-card px-3 py-1 font-mono text-[11px] uppercase tracking-wide text-muted">
-                <Lock className="h-3 w-3" /> Private Project
-              </span>
-            )}
-          </div>
-
-          <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            {project.name}
-          </h3>
-          <p className="text-pretty leading-relaxed text-muted">
-            {project.overview}
-          </p>
-
-          <ul className="grid gap-2 sm:grid-cols-2">
-            {project.features.slice(0, 4).map((f) => (
-              <li key={f} className="flex items-start gap-2 text-sm text-foreground/90">
-                <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <span>{f}</span>
-              </li>
-            ))}
-          </ul>
-
-          <div className="flex flex-wrap gap-1.5">
-            {project.stack.slice(0, 5).map((t) => (
-              <span
-                key={t}
-                className="rounded-md border border-border bg-background-secondary px-2 py-0.5 font-mono text-[11px] text-muted"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-
-          <div className="mt-1">
-            <Button href={`/projects/${project.slug}`} variant="secondary" magnetic>
-              View case study
-              <ArrowUpRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </article>
-    </Reveal>
+      </motion.article>
+    </div>
   );
 }
 
 export function FeaturedProjects() {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const large = useIsLarge();
+  const stack = large && !reduce;
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+
   return (
-    <Section id="work" ariaLabel="Featured projects">
+    <Section id="work" ariaLabel="Selected work" className="pb-12 sm:pb-16">
       <Container>
         <SectionHeading
-          eyebrow="Featured Work"
-          index="02"
+          index="01"
+          eyebrow="Selected work"
           title={
             <>
-              Selected <span className="text-gradient">case studies</span>
+              Live in the stores, <span className="serif text-primary">used daily.</span>
             </>
           }
-          description="A closer look at the projects where architecture, real-time behaviour, and polish mattered most."
+          description="Featured case studies — every one of them shipped and available on the App Store and Google Play."
         />
-        <div className="mt-16 flex flex-col gap-20 sm:gap-24">
+
+        <div ref={ref} className="relative mt-14 sm:mt-20">
           {featuredProjects.map((p, i) => (
-            <FeaturedRow key={p.slug} project={p} index={i} />
+            <FeaturedCard
+              key={p.slug}
+              project={p}
+              index={i}
+              total={featuredProjects.length}
+              progress={scrollYProgress}
+              stack={stack}
+            />
           ))}
         </div>
       </Container>

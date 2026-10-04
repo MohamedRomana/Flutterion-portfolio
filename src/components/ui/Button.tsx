@@ -2,23 +2,25 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Magnetic } from "./Magnetic";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "lime" | "secondary" | "ghost";
 type Size = "md" | "lg";
 
 const base =
-  "group/btn relative inline-flex items-center justify-center gap-2 rounded-full font-medium transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 disabled:opacity-50 cursor-pointer";
+  "group/btn relative isolate inline-flex items-center justify-center gap-2 overflow-hidden rounded-full font-medium tracking-tight transition-[color,background-color,border-color,box-shadow,transform] duration-300 ease-out active:scale-[0.97] disabled:opacity-50 cursor-pointer";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-gradient-to-r from-primary to-cyan text-white shadow-[0_10px_30px_-10px_var(--glow)] hover:shadow-[0_16px_40px_-12px_var(--glow)] hover:brightness-110",
+    "bg-foreground text-background hover:text-white before:absolute before:inset-0 before:-z-10 before:translate-y-full before:rounded-full before:bg-primary before:transition-transform before:duration-500 before:ease-[cubic-bezier(0.16,1,0.3,1)] hover:before:translate-y-0",
+  lime:
+    "bg-lime text-on-lime shadow-[0_12px_40px_-14px_color-mix(in_srgb,var(--lime)_70%,transparent)] hover:shadow-[0_18px_50px_-14px_color-mix(in_srgb,var(--lime)_90%,transparent)]",
   secondary:
-    "border border-border-strong bg-card text-foreground hover:border-primary/50 hover:bg-card-hover",
+    "border border-border-strong bg-card/60 text-foreground backdrop-blur hover:border-foreground/40 hover:bg-card-hover",
   ghost: "text-foreground hover:text-primary",
 };
 
 const sizes: Record<Size, string> = {
-  md: "px-5 py-2.5 text-sm",
-  lg: "px-7 py-3.5 text-base",
+  md: "h-11 px-5 text-sm",
+  lg: "h-14 px-7 text-[15px]",
 };
 
 interface CommonProps {
